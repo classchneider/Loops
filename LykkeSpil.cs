@@ -44,7 +44,7 @@ namespace Loops
             }
         }
 
-        /* static creation method */
+        /* static factory method */
         public static void Start()
         {
             LykkeSpil game = new LykkeSpil();
@@ -55,6 +55,7 @@ namespace Loops
             Console.CursorVisible = true;
         }
 
+        /* This initialization method is called from the Start factory method */
         void Init()
         {
             isRunning = true;
