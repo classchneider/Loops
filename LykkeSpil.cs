@@ -104,6 +104,7 @@ namespace Loops
             isRunning = false;
         }
 
+        /* Run method - this method makes things happen */
         void Run()
         {
             CurrentPlayer.StartTurn();
