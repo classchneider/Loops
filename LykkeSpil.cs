@@ -44,7 +44,7 @@ namespace Loops
             }
         }
 
-
+        /* static creation method */
         public static void Start()
         {
             LykkeSpil game = new LykkeSpil();

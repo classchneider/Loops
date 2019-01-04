@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Loops
 {
+    /* This is the main program */
     class Program
     {
         static Dictionary<string, Delegate> functions = new Dictionary<string, Delegate>();
