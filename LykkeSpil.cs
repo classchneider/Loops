@@ -36,6 +36,7 @@ namespace Loops
             }
         }
 
+        /* Method to get current player */
         public Player CurrentPlayer
         {
             get
