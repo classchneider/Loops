@@ -36,7 +36,7 @@ namespace Loops
             }
         }
 
-        /* Method to get current player */
+        /* Method to get current player  - test A */
         public Player CurrentPlayer
         {
             get
