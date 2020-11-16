@@ -241,7 +241,7 @@ namespace Loops
 
             public void Draw()
             {
-                Console.WriteLine("{0} turn", Name + (Name.ToLower.EndsWith("s") ? "'" : "'s"));
+                Console.WriteLine("{0} turn", Name + (Name.ToLower().EndsWith("s") ? "'" : "'s"));
                 
                 string line = "";
 
