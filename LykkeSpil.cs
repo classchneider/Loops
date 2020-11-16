@@ -150,7 +150,7 @@ namespace Loops
 
             foreach (Player player in scoreTable)
             {
-                Console.WriteLine("{0}{1}points", player.Name, player.Score);
+                Console.WriteLine("{0}: {1} points", player.Name, player.Score);
             }
             Console.WriteLine();
 
