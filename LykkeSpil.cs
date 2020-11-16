@@ -97,6 +97,18 @@ namespace Loops
                 }
             }
 
+            // Issue #24: Vælg antal af sider terningen skal have
+            Console.WriteLine("Enter the amount of sides you would like the dice to have");
+            while(true){
+            try{
+                Sides=Convert.ToInt32(Console.ReadLine());
+                break;
+            }catch{
+                Console.WriteLine("Invailid number! Try again.");
+            }}
+
+            
+
             Console.CursorVisible = false;
         }
 
@@ -191,9 +203,13 @@ namespace Loops
             return scoreTable;
         }
 
+
+        //Issue #24
+        public static int Sides;
+        
         public static int RollDice()
         {
-            return rand.Next(1, 7);
+            return rand.Next(1, Sides+1);
         }
 
         public class Player
