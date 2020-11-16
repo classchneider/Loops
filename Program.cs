@@ -79,6 +79,11 @@ namespace Loops
         static void FuncPrintUpTo()
         {
             Console.WriteLine("All natural numbers up to n");
+            Console.WriteLine("---");
+            Console.WriteLine("Example: n as 5");
+            Console.WriteLine("Input: 5");
+            Console.WriteLine("Output: 1, 2, 3, 4, 5");
+            Console.WriteLine("---");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
@@ -124,7 +129,7 @@ namespace Loops
                     int result = 0;
                     if (IsEven(number))
                     {
-                        result = (number)*(number/2);
+                        result = number * (number/2) + (number/2);
                     }
                     else
                     {
