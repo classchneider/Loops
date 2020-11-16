@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Loops
 {
     /* Denne klasse implementerer LykkeSpil som er et terningspil */
+    //Ændring 
     class LykkeSpil
     {
         bool isRunning;
