@@ -393,14 +393,11 @@ namespace Loops
         {
             if (!IsEven(number))
             {
-                for (int i = 2; i < number; i++)
+                for (int i = 3; i < number; i+=2)
                 {
-                    for (int u = 2; u < number; u++)
-                    {
-                        if (number == i * u)
-                        {
-                            return false;
-                        }
+                    if(IsFactorOf(number, i))
+                    { 
+                        return false;
                     }
                 }
             }
@@ -410,11 +407,18 @@ namespace Loops
             }
 
             return true;
+
         }
 
         static bool IsEven(int number)
         {
             return number % 2 == 0;
+        }
+        static bool IsFactorOf(int number, int factor)
+        {
+            double d = number/factor;
+            return d.ToString().Contains(".");
+            
         }
     }
 }
