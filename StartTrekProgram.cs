@@ -63,36 +63,54 @@ namespace Loops
             string input = Console.ReadLine();
             input = input.Trim();
 
+            bool err = false;
             if (!string.IsNullOrEmpty(input))
             {
                 if (input.StartsWith("gen ") || input.StartsWith("check "))
                 {
                     string[] args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
                     if (args.Length >= 2)
                     {
                         switch (args[0])
                         {
                             case "gen":
                                 int number = 0;
-                                if (int.TryParse(args[1], out number))
+                                try
                                 {
-                                    if (number > 0)
+                                    if (int.Parse(args[1]) <= (maleNameFilter.Length + femaleNameFilter.Length))
                                     {
-                                        if (args.Length > 2)
+                                        if (int.TryParse(args[1], out number))
                                         {
-                                            GenerateNames(number, args[2]);
-                                        }
-                                        else
-                                        {
-                                            GenerateNames(number);
+                                            if (number > 0)
+                                            {
+                                                if (args.Length > 2)
+                                                {
+                                                    GenerateNames(number, args[2]);
+                                                }
+                                                else
+                                                {
+                                                    GenerateNames(number);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("Must generate at least 1 name.");
+                                            }
                                         }
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Must generate at least 1 name.");
+                                        Console.WriteLine("gen number too high");
                                     }
                                 }
+                                catch (Exception)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("gen number too high");
+                                    Console.ResetColor();
+                                    err = true;
+                                }
+                                
                                 break;
                             case "check":
                                 Console.WriteLine();
@@ -124,7 +142,7 @@ namespace Loops
             }
 
             Console.WriteLine();
-            Console.WriteLine("Done.");
+            if (!err) { Console.WriteLine("Done."); }
         }
 
         static void GenerateNames(int count, string seed = "")
