@@ -13,7 +13,7 @@ namespace Loops
     {
         static Dictionary<string, Delegate> functions = new Dictionary<string, Delegate>();
 
-        static bool isRunning = true;
+        static bool isRunning = true; // TEST2
 
         static void Main(string[] args)
         {
