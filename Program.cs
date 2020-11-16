@@ -124,7 +124,7 @@ namespace Loops
                     int result = 0;
                     if (IsEven(number))
                     {
-                        result = (number)*(number/2);
+                        result = number * (number/2) + (number/2);
                     }
                     else
                     {
