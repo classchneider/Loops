@@ -398,7 +398,14 @@ namespace Loops
 
         static bool IsPrime(int number)
         {
-            
+            if(number == 1)
+            {
+                return false;
+            }
+            if(number == 2)
+            {
+                return true;
+            }
             int[] primeNumbers = { 3, 5, 7, 11, 13, 17, 19, 23 };
             
             if(!IsEven(number))
