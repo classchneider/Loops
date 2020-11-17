@@ -97,7 +97,7 @@ namespace Loops
                 if (number > 0)
                 {
                     Console.WriteLine("Printing numbers from 0 to {0}", number);
-                    for (int i = 1; i < number; i++)
+                    for (int i = 0; i < number; i++)
                     {
                         Console.WriteLine(i.ToString());
                     }
