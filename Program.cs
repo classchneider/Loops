@@ -63,7 +63,9 @@ namespace Loops
         static void Init()
         {
             functions.Add("exit", new Action(() => ExitProgram()));
+            functions.Add("x", new Action(() => ExitProgram()));
             functions.Add("help", new Action(() => ShowFunctions()));
+            functions.Add("?", new Action(() => ShowFunctions()));
             functions.Add("printnumbers", new Action(() => FuncPrintUpTo()));
             functions.Add("sum", new Action(() => FuncSumUpTo()));
             functions.Add("fibonacci", new Action(() => FuncFibonacci()));
