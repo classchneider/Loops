@@ -396,12 +396,23 @@ namespace Loops
 
         static bool IsPrime(int number)
         {
-            if (!IsEven(number))
+            
+            int[] primeNumbers = { 3, 5, 7, 11, 13, 17, 19, 23 };
+            
+            if(!IsEven(number))
             {
-                for (int i = 3; i < number; i+=2)
+                foreach(int pr in primeNumbers)
                 {
-                    if(IsFactorOf(number, i))
-                    { 
+                    if(number % pr == 0)
+                    {
+                        return false;
+                    }
+                }
+                int maxValue = number / primeNumbers.Last();
+                for(int i = 23; i < maxValue; i += 2)
+                {
+                    if(number % i == 0)
+                    {
                         return false;
                     }
                 }
@@ -410,7 +421,6 @@ namespace Loops
             {
                 return false;
             }
-
             return true;
 
         }
@@ -418,12 +428,6 @@ namespace Loops
         static bool IsEven(int number)
         {
             return number % 2 == 0;
-        }
-        static bool IsFactorOf(int number, int factor)
-        {
-            double d = number/factor;
-            return d.ToString().Contains(".");
-            
         }
     }
 }
