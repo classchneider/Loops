@@ -14,7 +14,7 @@ namespace Loops
 
     class Program
     {
-        static Dictionary<string, Delegate> functions = new Dictionary<string, Delegate>();
+        public static Dictionary<string, Delegate> functions = new Dictionary<string, Delegate>();
 
         static bool isRunning = true; // TEST232
 
