@@ -52,97 +52,123 @@ namespace Loops
 
         public static void Run()
         {
-            Console.WriteLine("Star Trek Names");
+            bool running = true;
 
-            Console.WriteLine("Commands:");
-            Console.WriteLine("'gen [number] [seed]' : Generates N number of valid names. Seed is optional. - Example 'gen 5 HelloWorld'");
-            Console.WriteLine("'check [name] [name]' : Checks validity of a name. Can take multiple names.  - Example 'check Spock'");
-
-            Console.Write(">");
-
-            string input = Console.ReadLine();
-            input = input.Trim();
-
-            bool err = false;
-            if (!string.IsNullOrEmpty(input))
+            while (running)
             {
-                if (input.StartsWith("gen ") || input.StartsWith("check "))
+                Console.WriteLine("Star Trek Names");
+
+                Console.WriteLine("Commands:");
+                Console.WriteLine("'gen [number] [seed]' : Generates N number of valid names. Seed is optional. - Example 'gen 5 HelloWorld'");
+                Console.WriteLine("'check [name] [name]' : Checks validity of a name. Can take multiple names.  - Example 'check Spock'");
+
+                Console.Write(">");
+
+                string input = Console.ReadLine();
+                input = input.Trim();
+
+                bool err = false;
+                if (!string.IsNullOrEmpty(input))
                 {
-                    string[] args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (args.Length >= 2)
+                    if (input.StartsWith("gen ") || input.StartsWith("check "))
                     {
-                        switch (args[0])
+                        string[] args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (args.Length >= 2)
                         {
-                            case "gen":
-                                int number = 0;
-                                try
-                                {
-                                    if (int.Parse(args[1]) <= (maleNameFilter.Length + femaleNameFilter.Length))
+                            switch (args[0])
+                            {
+                                case "gen":
+                                    int number = 0;
+                                    try
                                     {
-                                        if (int.TryParse(args[1], out number))
+                                        if (int.Parse(args[1]) <= (maleNameFilter.Length + femaleNameFilter.Length))
                                         {
-                                            if (number > 0)
+                                            if (int.TryParse(args[1], out number))
                                             {
-                                                if (args.Length > 2)
+                                                if (number > 0)
                                                 {
-                                                    GenerateNames(number, args[2]);
+                                                    if (args.Length > 2)
+                                                    {
+                                                        GenerateNames(number, args[2]);
+                                                    }
+                                                    else
+                                                    {
+                                                        GenerateNames(number);
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    GenerateNames(number);
+                                                    Console.WriteLine("Must generate at least 1 name.");
                                                 }
                                             }
-                                            else
-                                            {
-                                                Console.WriteLine("Must generate at least 1 name.");
-                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("gen number too high");
                                         }
                                     }
-                                    else
+                                    catch (Exception)
                                     {
+                                        Console.ForegroundColor = ConsoleColor.Red;
                                         Console.WriteLine("gen number too high");
+                                        Console.ResetColor();
+                                        err = true;
                                     }
-                                }
-                                catch (Exception)
-                                {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("gen number too high");
-                                    Console.ResetColor();
-                                    err = true;
-                                }
-                                
-                                break;
-                            case "check":
-                                Console.WriteLine();
-                                for (int i = 1; i < args.Length; i++)
-                                {
-                                    bool isValid = IsNameValid(args[i]);
-                                    string gender = isValid ? (args[i].StartsWith("T'") ? "female " : "male ") : "";
-                                    Console.WriteLine("{0} is {1}a valid {2}name.", args[i], isValid ? "" : "not ", gender);
-                                }
-                                break;
-                            default:
-                                Console.WriteLine("Invalid command.");
-                                break;
+                                    break;
+
+                                case "check":
+                                    Console.WriteLine();
+                                    for (int j = 1; j < args.Length; j++)
+                                    {
+                                        bool isValid = IsNameValid(args[j]);
+                                        string gender = isValid ? (args[j].StartsWith("T'") ? "female " : "male ") : "";
+                                        Console.WriteLine("{0} is {1}a valid {2}name.", args[j], isValid ? "" : "not ", gender);
+                                    }
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Invalid command.");
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid argument count.");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Invalid argument count.");
+                        Console.WriteLine("Invalid command.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid command.");
+                    Console.WriteLine("No command.");
+                }
+
+                Console.WriteLine();
+                if (!err)
+                {
+                    Console.WriteLine("Done.");
+                }
+                Console.WriteLine("do you wish to quit? press 'y' if so");
+                Console.Write(">");
+                char inputQuit = Console.ReadKey().KeyChar;
+                if(inputQuit == 'y')
+                {
+                    running = false;
+                    Console.Clear();
+                    Console.WriteLine("Available functions:");
+                    foreach (KeyValuePair<string, Delegate> del in Program.functions)
+                    {
+                        Console.WriteLine(del.Key);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\n\n");
                 }
             }
-            else
-            {
-                Console.WriteLine("No command.");
-            }
-
-            Console.WriteLine();
-            if (!err) { Console.WriteLine("Done."); }
         }
 
         static void GenerateNames(int count, string seed = "")
