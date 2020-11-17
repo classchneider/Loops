@@ -165,7 +165,7 @@ namespace Loops
                 {
                     int currNumber = 0;
                     int lastNumber = 1;
-                    for (int i = 1; i < number; i++)
+                    for (int i = 0; i < number; i++)
                     {
                         int temp = currNumber;
                         currNumber += lastNumber;
