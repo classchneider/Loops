@@ -159,9 +159,8 @@ namespace Loops
 
             string input = Console.ReadLine();
 
-            int number = 0;
 
-            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out int number))
             {
                 if (number > 0)
                 {
