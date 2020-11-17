@@ -163,7 +163,7 @@ namespace Loops
 
             foreach (Player player in scoreTable)
             {
-                Console.WriteLine("{0}{1}points", player.Name, player.Score);
+                Console.WriteLine("{0}: {1} points", player.Name, player.Score);
             }
             Console.WriteLine();
 
@@ -258,7 +258,7 @@ namespace Loops
 
             public void Draw()
             {
-                Console.WriteLine("{0} turn", Name + (Name.EndsWith("s") ? "'" : "s"));
+                Console.WriteLine("{0} turn", Name + (Name.ToLower().EndsWith("s") ? "'" : "'s"));
                 
                 string line = "";
 
