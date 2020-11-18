@@ -10,7 +10,7 @@ namespace Loops
     //Ændring 2
     class LykkeSpil
     {
-        public bool isRunning;
+        bool isRunning;
         public static Random rand;
         List<Player> players;
 
@@ -50,15 +50,16 @@ namespace Loops
         public static void Start()
         {
             LykkeSpil game = new LykkeSpil();
-            
-            game.Init();
-            game.Run();
 
-            Console.CursorVisible = true;
+            if (game.Init())
+            {
+                game.Run();
+                Console.CursorVisible = true;
+            }
         }
 
         /* This initialization method is called from the Start factory method */
-        void Init()
+        bool Init()
         {
             isRunning = true;
             rand = new Random();
@@ -70,6 +71,7 @@ namespace Loops
             bool isGettingUsers = true;
             while (isGettingUsers)
             {
+                Console.WriteLine("type 'quit' to exit the program at any time");
                 Console.WriteLine("Please enter a name:");
                 string input = Console.ReadLine().Trim();
 
@@ -86,7 +88,12 @@ namespace Loops
                 }
                 else
                 {
-                    if (players.Where(p => p.Name == input)?.Count() > 0)
+                    if(input == "quit")
+                    {
+                        Quit();
+                        return false;
+                    }
+                    else if (players.Where(p => p.Name == input)?.Count() > 0)
                     {
                         Console.WriteLine("Players cannot have the same name.");
                     }
@@ -98,21 +105,23 @@ namespace Loops
             }
 
             // Issue #24: Vælg antal af sider terningen skal have
-            Console.WriteLine("Enter the amount of sides you would like the dice to have:");
+            Console.WriteLine("Enter the amount of sides you would like the dice to have");
             while(true){
             try{
                 Sides=Convert.ToInt32(Console.ReadLine());
                 break;
             }catch{
-                Console.WriteLine("Invalid number! Try again.");
+                Console.WriteLine("Invailid number! Try again.");
             }}
 
+            
+
             Console.CursorVisible = false;
+            return true;
         }
 
-        public void Quit()
+        void Quit()
         {
-            
             isRunning = false;
         }
 
@@ -125,13 +134,13 @@ namespace Loops
 
             while (isRunning)
             {
-                ConsoleKeyInfo input = Console.ReadKey();   
-                
+                ConsoleKeyInfo input = Console.ReadKey();
+
                 if (CurrentPlayer.isDone)
                 {
                     if (CurrentPlayer.Score >= winningScore)
                     {
-                        Quit();
+                        isRunning = false;
                     }
                     else
                     {
@@ -141,13 +150,15 @@ namespace Loops
                 }
                 else
                 {
-                    CurrentPlayer.TakeTurn(input);
-                    if (CurrentPlayer.hasQuit)
+                    //if player quits
+                    if (!CurrentPlayer.TakeTurn(input))
                     {
+                        Console.WriteLine("\n---");
                         Quit();
+                        Console.Clear();
+                        break;
                     }
                 }
-
                 Draw();
             }
         }
@@ -222,8 +233,6 @@ namespace Loops
 
             public bool isDone;
 
-            public bool hasQuit = false;
-
             List<int> rolls;
 
             public Player(string name)
@@ -240,8 +249,10 @@ namespace Loops
                 rolls.Clear();
             }
 
-            public void TakeTurn(ConsoleKeyInfo input)
+            //returns false if player quits
+            public bool TakeTurn(ConsoleKeyInfo input)
             {
+                bool output = true;
                 switch (input.Key)
                 {
                     case ConsoleKey.R:
@@ -257,11 +268,13 @@ namespace Loops
                         isDone = true;
                         break;
                     case ConsoleKey.Q:
-                        hasQuit = true;
+                        isDone = true;
+                        output = false;
                         break;
                     default:
                         break;
                 }
+                return output;
             }
 
             public void Draw()
