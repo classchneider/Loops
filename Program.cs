@@ -200,8 +200,8 @@ namespace Loops
 
             if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
-               Console.WriteLine("{0} factorial is {1}", number, GetFactorial(number));
-               
+                string result = GetFactorial(number);
+                Console.WriteLine("{0} factorial is {1}", number, result);
             }
             else
             {
@@ -225,14 +225,11 @@ namespace Loops
                 List<string> multiplied = new List<string>();
 
                 foreach(string s in resultList)
-                {
+                { 
                     string mult = MultiplyString(s, i.ToString());
-            
-                    
                     multiplied.Add(mult);
                     temp.Add(mult);
                 }
-  
                 bool Stopper = true;
 
 
@@ -278,6 +275,10 @@ namespace Loops
                 resultList = temp;
             }
             result = string.Join("", resultList);
+            while(result[0] == '0')
+            {
+                result = result.Substring(1);
+            }
 
             return result;
         }
@@ -293,8 +294,12 @@ namespace Loops
                 {
                     s2 = "0";
                 }
-                
-                return (Convert.ToInt32(s1) + Convert.ToInt32(s2)).ToString();
+                string returnValue = (Convert.ToInt32(s1) + Convert.ToInt32(s2)).ToString();
+                while(returnValue.Length < 3)
+                {
+                    returnValue = "0" + returnValue;
+                }
+                return returnValue;
             }
             catch
             {
@@ -306,9 +311,9 @@ namespace Loops
             try
             {
                 string s = (Convert.ToInt32(s1) * Convert.ToInt32(s2)).ToString();
-                if(s == "0")
+                while(s.Length < 3)
                 {
-                    return "000";
+                    s = "0" + s;
                 }
                 return s;
             }
