@@ -10,7 +10,7 @@ namespace Loops
     //Ændring 2
     class LykkeSpil
     {
-        bool isRunning;
+        public bool isRunning;
         public static Random rand;
         List<Player> players;
 
@@ -98,22 +98,21 @@ namespace Loops
             }
 
             // Issue #24: Vælg antal af sider terningen skal have
-            Console.WriteLine("Enter the amount of sides you would like the dice to have");
+            Console.WriteLine("Enter the amount of sides you would like the dice to have:");
             while(true){
             try{
                 Sides=Convert.ToInt32(Console.ReadLine());
                 break;
             }catch{
-                Console.WriteLine("Invailid number! Try again.");
+                Console.WriteLine("Invalid number! Try again.");
             }}
-
-            
 
             Console.CursorVisible = false;
         }
 
-        void Quit()
+        public void Quit()
         {
+            
             isRunning = false;
         }
 
@@ -126,13 +125,13 @@ namespace Loops
 
             while (isRunning)
             {
-                ConsoleKeyInfo input = Console.ReadKey();
+                ConsoleKeyInfo input = Console.ReadKey();   
                 
                 if (CurrentPlayer.isDone)
                 {
                     if (CurrentPlayer.Score >= winningScore)
                     {
-                        isRunning = false;
+                        Quit();
                     }
                     else
                     {
@@ -143,6 +142,10 @@ namespace Loops
                 else
                 {
                     CurrentPlayer.TakeTurn(input);
+                    if (CurrentPlayer.hasQuit)
+                    {
+                        Quit();
+                    }
                 }
 
                 Draw();
@@ -219,6 +222,8 @@ namespace Loops
 
             public bool isDone;
 
+            public bool hasQuit = false;
+
             List<int> rolls;
 
             public Player(string name)
@@ -251,6 +256,9 @@ namespace Loops
                         Score += rolls.Sum();
                         isDone = true;
                         break;
+                    case ConsoleKey.Q:
+                        hasQuit = true;
+                        break;
                     default:
                         break;
                 }
@@ -279,6 +287,7 @@ namespace Loops
                     Console.WriteLine("Actions");
                     Console.WriteLine("  'R'oll");
                     Console.WriteLine("  'S'top");
+                    Console.WriteLine("  'Q'uit");
                 }
                 else
                 {
