@@ -601,7 +601,7 @@ namespace Loops
             {
                 foreach (int pr in primeNumbers)
                 {
-                    if (number % pr == 0)
+                    if (number % pr == 0&& number!=pr)
                     {
                         return false;
                     }
