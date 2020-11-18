@@ -23,6 +23,7 @@ namespace Loops
         public static Dictionary<string, DescAndFunction> functions = new Dictionary<string, DescAndFunction>();
 
         static bool isRunning = true; // TEST232
+        static string modifier = "";
 
         static void Main(string[] args)
         {
@@ -32,14 +33,21 @@ namespace Loops
 
             while (isRunning)
             {
+                modifier = "";
                 Console.WriteLine();
                 Console.Write("Enter function name:");
 
-                string input = Console.ReadLine().Trim().ToLower();
 
-                if (functions.ContainsKey(input))
+                string[] input = Console.ReadLine().Trim().ToLower().Split(' ');
+                string cmd = input[0];
+                if(input.Length > 1)
                 {
-                    functions[input].func.DynamicInvoke();
+                    modifier = input[1];
+                }
+
+                if (functions.ContainsKey(cmd))
+                {
+                    functions[cmd].func.DynamicInvoke();
                 }
                 else
                 {
@@ -86,15 +94,19 @@ namespace Loops
 
         static void FuncPrintUpTo()
         {
-            Console.WriteLine("All natural numbers up to n");
-            Console.WriteLine("---");
-            Console.WriteLine("Example: n as 5");
-            Console.WriteLine("Input: 5");
-            Console.WriteLine("Output: 1, 2, 3, 4, 5");
-            Console.WriteLine("---");
-            Console.Write("Enter any natural number above zero:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("All natural numbers up to n");
+                Console.WriteLine("---");
+                Console.WriteLine("Example: n as 5");
+                Console.WriteLine("Input: 5");
+                Console.WriteLine("Output: 1, 2, 3, 4, 5");
+                Console.WriteLine("---");
+                Console.Write("Enter any natural number above zero:");
 
-            string input = Console.ReadLine();
+                input = Console.ReadLine();
+            }
 
             int number = 0;
 
@@ -123,10 +135,15 @@ namespace Loops
 
         static void FuncSumUpTo()
         {
-            Console.WriteLine("Sum of natural numbers up to n");
-            Console.Write("Enter any natural number above zero:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("Sum of natural numbers up to n");
+                Console.Write("Enter any natural number above zero:");
+                input = Console.ReadLine();
 
-            string input = Console.ReadLine();
+            }
+            
 
             int number = 0;
 
@@ -160,10 +177,16 @@ namespace Loops
 
         static void FuncFibonacci()
         {
-            Console.WriteLine("Fibonacci sequence");
-            Console.Write("Enter any natural number above zero:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("Fibonacci sequence");
+                Console.Write("Enter any natural number above zero:");
 
-            string input = Console.ReadLine();
+                input = Console.ReadLine();
+
+            }
+            
 
 
             if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out int number))
@@ -196,11 +219,18 @@ namespace Loops
 
         static void FuncFactorial()
         {
-            Console.WriteLine("n factorial");
-            Console.Write("Enter any natural non-negative number:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("n factorial");
+                Console.Write("Enter any natural non-negative number:");
+
+                input = Console.ReadLine();
+            }
+            
 
 
-            string input = Console.ReadLine();
+            
 
             int number = 0;
 
@@ -353,10 +383,17 @@ namespace Loops
 
         static void FuncIsPrime()
         {
-            Console.WriteLine("Is n prime");
-            Console.Write("Enter any natural number above zero:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("Is n prime");
+                Console.Write("Enter any natural number above zero:");
 
-            string input = Console.ReadLine();
+                input = Console.ReadLine();
+            }
+            
+
+            
 
             int number = 0;
 
@@ -388,10 +425,17 @@ namespace Loops
 
         static void FuncPrimesUpTo()
         {
-            Console.WriteLine("Primes up to n");
-            Console.Write("Enter any natural number above zero:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("Primes up to n");
+                Console.Write("Enter any natural number above zero:");
 
-            string input = Console.ReadLine();
+                input = Console.ReadLine();
+            }
+            
+
+            
 
             int number = 0;
 
@@ -427,10 +471,15 @@ namespace Loops
 
         static void FuncListFilesInDir()
         {
-            Console.WriteLine("Directory listing");
-            Console.Write("Enter a directory path:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("Directory listing");
+                Console.Write("Enter a directory path:");
 
-            string input = Console.ReadLine();
+                input = Console.ReadLine();
+            }
+            
 
             if (Directory.Exists(input.Trim()))
             {
@@ -473,10 +522,17 @@ namespace Loops
 
         static void FuncStudentGrading()
         {
-            Console.WriteLine("Student grading");
-            Console.Write("How many students:");
+            string input = modifier;
+            if(modifier == "")
+            {
+                Console.WriteLine("Student grading");
+                Console.Write("How many students:");
 
-            string input = Console.ReadLine();
+                input = Console.ReadLine();
+            }
+            
+
+            
 
             int numberOfStudents = 0;
 
