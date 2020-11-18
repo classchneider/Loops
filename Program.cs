@@ -202,6 +202,7 @@ namespace Loops
             {
                 string result = GetFactorial(number);
                 Console.WriteLine("{0} factorial is {1}", number, result);
+                Console.WriteLine($"Length = {result.Length}");
             }
             else
             {
