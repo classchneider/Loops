@@ -12,9 +12,15 @@ namespace Loops
     
     //This is the Correction Branch
 
+    struct DescAndFunction
+    {
+        public string desc;
+        public Delegate func;
+    }
+
     class Program
     {
-        public static Dictionary<string, Delegate> functions = new Dictionary<string, Delegate>();
+        public static Dictionary<string, DescAndFunction> functions = new Dictionary<string, DescAndFunction>();
 
         static bool isRunning = true; // TEST232
 
@@ -33,7 +39,7 @@ namespace Loops
 
                 if (functions.ContainsKey(input))
                 {
-                    functions[input].DynamicInvoke();
+                    functions[input].func.DynamicInvoke();
                 }
                 else
                 {
@@ -49,9 +55,9 @@ namespace Loops
         static void ShowFunctions()
         {
             Console.WriteLine("Available functions:");
-            foreach (KeyValuePair<string, Delegate> del in functions)
+            foreach (KeyValuePair<string, DescAndFunction> del in functions)
             {
-                Console.WriteLine(del.Key);
+                Console.WriteLine($"{del.Key} -- {del.Value.desc}");
             }
         }
 
@@ -62,20 +68,20 @@ namespace Loops
 
         static void Init()
         {
-            functions.Add("exit", new Action(() => ExitProgram()));
-            functions.Add("x", new Action(() => ExitProgram()));
-            functions.Add("help", new Action(() => ShowFunctions()));
-            functions.Add("?", new Action(() => ShowFunctions()));
-            functions.Add("printnumbers", new Action(() => FuncPrintUpTo()));
-            functions.Add("sum", new Action(() => FuncSumUpTo()));
-            functions.Add("fibonacci", new Action(() => FuncFibonacci()));
-            functions.Add("factorial", new Action(() => FuncFactorial()));
-            functions.Add("isprime", new Action(() => FuncIsPrime()));
-            functions.Add("printprimes", new Action(() => FuncPrimesUpTo()));
-            functions.Add("listdir", new Action(() => FuncListFilesInDir()));
-            functions.Add("lykkespil", new Action(() => LykkeSpil.Start()));
-            functions.Add("studentgrading", new Action(() => FuncStudentGrading()));
-            functions.Add("startreknames", new Action(() => StartTrekProgram.Run()));
+            functions.Add("exit", new DescAndFunction { desc = "exits the program", func = new Action(() => ExitProgram())});
+            functions.Add("x", new DescAndFunction { desc = "exits the program", func = new Action(() => ExitProgram())});
+            functions.Add("help", new DescAndFunction { desc = "shows function list", func = new Action(() => ShowFunctions())});
+            functions.Add("?", new DescAndFunction { desc = "shows function list", func = new Action(() => ShowFunctions())});
+            functions.Add("printnumbers", new DescAndFunction { desc = "print numbers up to a given number", func = new Action(() => FuncPrintUpTo())});
+            functions.Add("sum", new DescAndFunction { desc = "sums all numbers leading up to a given number", func = new Action(() => FuncSumUpTo())});
+            functions.Add("fibonacci", new DescAndFunction { desc = "prints the fibonacci sequence for a given length", func = new Action(() => FuncFibonacci())});
+            functions.Add("factorial", new DescAndFunction { desc = "calculates the factorial of a given number", func = new Action(() => FuncFactorial())});
+            functions.Add("isprime", new DescAndFunction { desc = "checks if a given number is a prime number", func = new Action(() => FuncIsPrime())});
+            functions.Add("printprimes", new DescAndFunction { desc = "prints n prime numbers", func = new Action(() => FuncPrimesUpTo())});
+            functions.Add("listdir", new DescAndFunction { desc = "lists directive", func = new Action(() => FuncListFilesInDir())});
+            functions.Add("lykkespil", new DescAndFunction { desc = "runs lykkespil", func = new Action(() => LykkeSpil.Start())});
+            functions.Add("studentgrading", new DescAndFunction { desc = "grades students", func = new Action(() => FuncStudentGrading())});
+            functions.Add("startreknames", new DescAndFunction { desc = "generate StarTrek names and check if specific names are valid", func = new Action(() => StartTrekProgram.Run())});
         }
 
         static void FuncPrintUpTo()

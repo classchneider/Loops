@@ -159,9 +159,9 @@ namespace Loops
                     running = false;
                     Console.Clear();
                     Console.WriteLine("Available functions:");
-                    foreach (KeyValuePair<string, Delegate> del in Program.functions)
+                    foreach (KeyValuePair<string, DescAndFunction> del in Program.functions)
                     {
-                        Console.WriteLine(del.Key);
+                        Console.Write($"{del.Key} -- {del.Value.desc}\n");
                     }
                 }
                 else
