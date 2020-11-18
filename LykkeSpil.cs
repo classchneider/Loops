@@ -50,15 +50,16 @@ namespace Loops
         public static void Start()
         {
             LykkeSpil game = new LykkeSpil();
-            
-            game.Init();
-            game.Run();
 
-            Console.CursorVisible = true;
+            if (game.Init())
+            {
+                game.Run();
+                Console.CursorVisible = true;
+            }
         }
 
         /* This initialization method is called from the Start factory method */
-        void Init()
+        bool Init()
         {
             isRunning = true;
             rand = new Random();
@@ -70,6 +71,7 @@ namespace Loops
             bool isGettingUsers = true;
             while (isGettingUsers)
             {
+                Console.WriteLine("type 'quit' to exit the program at any time");
                 Console.WriteLine("Please enter a name:");
                 string input = Console.ReadLine().Trim();
 
@@ -86,7 +88,12 @@ namespace Loops
                 }
                 else
                 {
-                    if (players.Where(p => p.Name == input)?.Count() > 0)
+                    if(input == "quit")
+                    {
+                        Quit();
+                        return false;
+                    }
+                    else if (players.Where(p => p.Name == input)?.Count() > 0)
                     {
                         Console.WriteLine("Players cannot have the same name.");
                     }
@@ -110,6 +117,7 @@ namespace Loops
             
 
             Console.CursorVisible = false;
+            return true;
         }
 
         void Quit()
@@ -127,7 +135,7 @@ namespace Loops
             while (isRunning)
             {
                 ConsoleKeyInfo input = Console.ReadKey();
-                
+
                 if (CurrentPlayer.isDone)
                 {
                     if (CurrentPlayer.Score >= winningScore)
@@ -142,9 +150,15 @@ namespace Loops
                 }
                 else
                 {
-                    CurrentPlayer.TakeTurn(input);
+                    //if player quits
+                    if (!CurrentPlayer.TakeTurn(input))
+                    {
+                        Console.WriteLine("\n---");
+                        Quit();
+                        Console.Clear();
+                        break;
+                    }
                 }
-
                 Draw();
             }
         }
@@ -235,8 +249,10 @@ namespace Loops
                 rolls.Clear();
             }
 
-            public void TakeTurn(ConsoleKeyInfo input)
+            //returns false if player quits
+            public bool TakeTurn(ConsoleKeyInfo input)
             {
+                bool output = true;
                 switch (input.Key)
                 {
                     case ConsoleKey.R:
@@ -251,9 +267,14 @@ namespace Loops
                         Score += rolls.Sum();
                         isDone = true;
                         break;
+                    case ConsoleKey.Q:
+                        isDone = true;
+                        output = false;
+                        break;
                     default:
                         break;
                 }
+                return output;
             }
 
             public void Draw()
@@ -279,6 +300,7 @@ namespace Loops
                     Console.WriteLine("Actions");
                     Console.WriteLine("  'R'oll");
                     Console.WriteLine("  'S'top");
+                    Console.WriteLine("  'Q'uit");
                 }
                 else
                 {
