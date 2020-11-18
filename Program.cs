@@ -427,21 +427,29 @@ namespace Loops
 
         static void FuncListFilesInDir()
         {
+            bool fullPath = false;
             Console.WriteLine("Directory listing");
+            Console.WriteLine("type 'full' at the end of the command to get the full path");
             Console.Write("Enter a directory path:");
 
             string input = Console.ReadLine();
+            string[] inputArray = input.Split(' ');
 
+            if (inputArray.Last().Trim() == "full")
+            {
+                fullPath = true;
+                input = inputArray.First().Trim();
+            }
             if (Directory.Exists(input.Trim()))
             {
-                ListDirContents(input.Trim(), 1);
+                ListDirContents(input.Trim(), 1, fullPath);
             }
 
             Console.WriteLine();
             Console.WriteLine("Done.");
         }
 
-        static void ListDirContents(string path, int indent)
+        static void ListDirContents(string path, int indent, bool fullPath)
         {
             int indentWidth = 2;
 
@@ -452,17 +460,31 @@ namespace Loops
                     string[] files = Directory.GetFiles(path);
                     string[] folders = Directory.GetDirectories(path);
 
-
-                    foreach (string file in files)
+                    if (fullPath)
                     {
-                        Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
+                        foreach (string file in files)
+                        {
+                            Console.WriteLine(file);
+                        }
+                        foreach (string folder in folders)
+                        {
+                            Console.WriteLine(folder);
+                            ListDirContents(folder, indent + 1, fullPath);
+                        }
                     }
-
-                    foreach (string folder in folders)
+                    else
                     {
-                        Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
-                        ListDirContents(folder, indent + 1);
+                        foreach (string file in files)
+                        {
+                            Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
+                        }
+                        foreach (string folder in folders)
+                        {
+                            Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
+                            ListDirContents(folder, indent + 1, fullPath);
+                        }
                     }
+                    
                 }
                 catch
                 {
