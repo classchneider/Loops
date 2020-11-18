@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Loops
 {
     /* This is the main program */
-    
+
     //This is the Correction Branch
 
     struct DescAndFunction
@@ -105,7 +105,7 @@ namespace Loops
                     Console.WriteLine("Printing numbers from 0 to {0}", number);
                     for (int i = 0; i < number; i++)
                     {
-                        Console.WriteLine((i+1).ToString());
+                        Console.WriteLine((i + 1).ToString());
                     }
                 }
                 else
@@ -137,7 +137,7 @@ namespace Loops
                     int result = 0;
                     if (IsEven(number))
                     {
-                        result = number * (number/2) + (number/2);
+                        result = number * (number / 2) + (number / 2);
                     }
                     else
                     {
@@ -198,7 +198,7 @@ namespace Loops
         {
             Console.WriteLine("n factorial");
             Console.Write("Enter any natural non-negative number:");
-            
+
 
             string input = Console.ReadLine();
 
@@ -208,6 +208,7 @@ namespace Loops
             {
                 string result = GetFactorial(number);
                 Console.WriteLine("{0} factorial is {1}", number, result);
+                Console.WriteLine($"Length = {result.Length}");
             }
             else
             {
@@ -218,20 +219,20 @@ namespace Loops
         }
         static string GetFactorial(int number)
         {
-            
+
 
             string result = "";
             List<string> resultList = new List<string>();
             resultList.Add("1");
 
-            for(int i = 1; i <= number; i++)
+            for (int i = 1; i <= number; i++)
             {
-      
+
                 List<string> temp = new List<string>();
                 List<string> multiplied = new List<string>();
 
-                foreach(string s in resultList)
-                { 
+                foreach (string s in resultList)
+                {
                     string mult = MultiplyString(s, i.ToString());
                     multiplied.Add(mult);
                     temp.Add(mult);
@@ -239,32 +240,32 @@ namespace Loops
                 bool Stopper = true;
 
 
-                while(Stopper)
+                while (Stopper)
                 {
                     int addToIndex = 0;
                     Stopper = false;
                     List<string> tempCopy = new List<string>();
-                    foreach(string s in temp)
+                    foreach (string s in temp)
                     {
                         tempCopy.Add(s);
                     }
-                    for(int i1 = 0; i1 < tempCopy.Count; i1++)
+                    for (int i1 = 0; i1 < tempCopy.Count; i1++)
                     {
-                        if(tempCopy[i1].Length > 3)
+                        if (tempCopy[i1].Length > 3)
                         {
                             Stopper = true;
                             string[] split = SplitInto3s(tempCopy[i1]);
                             int startIndex = i1 + addToIndex - (split.Length - 1);
-                            while(startIndex < 0)
+                            while (startIndex < 0)
                             {
                                 temp.Insert(0, "");
                                 startIndex++;
                                 addToIndex++;
                             }
-                            for(int i3 = 0; i3<split.Count(); i3++)
+                            for (int i3 = 0; i3 < split.Count(); i3++)
                             {
-                                int tI = i1+addToIndex-split.Count()+i3+1;
-                                if(i3 == split.Count() - 1)
+                                int tI = i1 + addToIndex - split.Count() + i3 + 1;
+                                if (i3 == split.Count() - 1)
                                 {
                                     temp[tI] = split[i3];
                                 }
@@ -273,15 +274,15 @@ namespace Loops
                                     temp[tI] = AddNumberToString(temp[tI], split[i3]);
                                 }
                             }
-                            
+
                         }
                     }
-                    
+
                 }
                 resultList = temp;
             }
             result = string.Join("", resultList);
-            while(result[0] == '0')
+            while (result[0] == '0')
             {
                 result = result.Substring(1);
             }
@@ -292,16 +293,16 @@ namespace Loops
         {
             try
             {
-                if(s1 == "")
+                if (s1 == "")
                 {
                     s1 = "0";
                 }
-                if(s2 == "")
+                if (s2 == "")
                 {
                     s2 = "0";
                 }
                 string returnValue = (Convert.ToInt32(s1) + Convert.ToInt32(s2)).ToString();
-                while(returnValue.Length < 3)
+                while (returnValue.Length < 3)
                 {
                     returnValue = "0" + returnValue;
                 }
@@ -317,7 +318,7 @@ namespace Loops
             try
             {
                 string s = (Convert.ToInt32(s1) * Convert.ToInt32(s2)).ToString();
-                while(s.Length < 3)
+                while (s.Length < 3)
                 {
                     s = "0" + s;
                 }
@@ -334,13 +335,13 @@ namespace Loops
             arLength += 1;
             string[] returnValue = new string[arLength];
             int lI = returnValue.Length - 1;
-            for(int i = input.Length-1; i >=0; i--)
+            for (int i = input.Length - 1; i >= 0; i--)
             {
-                if(returnValue[lI] == null)
+                if (returnValue[lI] == null)
                 {
                     returnValue[lI] = "";
                 }
-                if(returnValue[lI].Length == 3)
+                if (returnValue[lI].Length == 3)
                 {
                     lI--;
                 }
@@ -348,7 +349,7 @@ namespace Loops
             }
             return returnValue;
         }
-        
+
 
         static void FuncIsPrime()
         {
@@ -446,19 +447,26 @@ namespace Loops
 
             if (Directory.Exists(path))
             {
-                string[] files = Directory.GetFiles(path);
-
-                string[] folders = Directory.GetDirectories(path);
-
-                foreach (string file in files)
+                try
                 {
-                    Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
+                    string[] files = Directory.GetFiles(path);
+                    string[] folders = Directory.GetDirectories(path);
+
+
+                    foreach (string file in files)
+                    {
+                        Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
+                    }
+
+                    foreach (string folder in folders)
+                    {
+                        Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
+                        ListDirContents(folder, indent + 1);
+                    }
                 }
-
-                foreach (string folder in folders)
+                catch
                 {
-                    Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
-                    ListDirContents(folder, indent + 1);
+                    Console.WriteLine($"Error unable to list: {path}");
                 }
             }
         }
@@ -523,29 +531,29 @@ namespace Loops
 
         static bool IsPrime(int number)
         {
-            if(number == 1)
+            if (number == 1)
             {
                 return false;
             }
-            if(number == 2)
+            if (number == 2)
             {
                 return true;
             }
             int[] primeNumbers = { 3, 5, 7, 11, 13, 17, 19, 23 };
-            
-            if(!IsEven(number))
+
+            if (!IsEven(number))
             {
-                foreach(int pr in primeNumbers)
+                foreach (int pr in primeNumbers)
                 {
-                    if(number % pr == 0)
+                    if (number % pr == 0)
                     {
                         return false;
                     }
                 }
                 int maxValue = number / primeNumbers.Last();
-                for(int i = 23; i < maxValue; i += 2)
+                for (int i = 23; i < maxValue; i += 2)
                 {
-                    if(number % i == 0)
+                    if (number % i == 0)
                     {
                         return false;
                     }
