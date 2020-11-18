@@ -474,7 +474,16 @@ namespace Loops
         static void FuncListFilesInDir()
         {
             string input = modifier.Split(' ').First().Trim();
-            string filter = modifier.Replace("full","").Replace(input, "").Trim();
+            string filter = "";
+            try
+            {
+                filter = modifier.Replace("full", "").Replace(input, "").Trim();
+            }
+            catch
+            {
+
+            }
+                
             bool fullPath = false;
             if (modifier == "")
             {
