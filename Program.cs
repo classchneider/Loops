@@ -472,184 +472,182 @@ namespace Loops
         static void FuncListFilesInDir()
         {
             string input = modifier;
+            bool fullPath = false;
             if (modifier == "")
             {
-                bool fullPath = false;
                 Console.WriteLine("Directory listing");
                 Console.WriteLine("type 'full' at the end of the command to get the full path");
                 Console.Write("Enter a directory path:");
 
                 input = Console.ReadLine();
             }
-            
-            string input = Console.ReadLine();
             string[] inputArray = input.Split(' ');
 
-                if (inputArray.Last().Trim() == "full")
-                {
-                    fullPath = true;
-                    input = inputArray.First().Trim();
-                }
-                if (Directory.Exists(input.Trim()))
-                {
-                    ListDirContents(input.Trim(), 1, fullPath);
-                }
-
-                Console.WriteLine();
-                Console.WriteLine("Done.");
+            if (inputArray.Last().Trim() == "full")
+            {
+                fullPath = true;
+                input = inputArray.First().Trim();
+            }
+            if (Directory.Exists(input.Trim()))
+            {
+                ListDirContents(input.Trim(), 1, fullPath);
             }
 
-            static void ListDirContents(string path, int indent, bool fullPath)
+            Console.WriteLine();
+            Console.WriteLine("Done.");
+        }
+
+        static void ListDirContents(string path, int indent, bool fullPath)
+        {
+            int indentWidth = 2;
+
+            if (Directory.Exists(path))
             {
-                int indentWidth = 2;
-
-                if (Directory.Exists(path))
+                try
                 {
-                    try
+                    string[] files = Directory.GetFiles(path);
+                    string[] folders = Directory.GetDirectories(path);
+
+                    if (fullPath)
                     {
-                        string[] files = Directory.GetFiles(path);
-                        string[] folders = Directory.GetDirectories(path);
-
-                        if (fullPath)
+                        foreach (string file in files)
                         {
-                            foreach (string file in files)
-                            {
-                                Console.WriteLine(file);
-                            }
-                            foreach (string folder in folders)
-                            {
-                                Console.WriteLine(folder);
-                                ListDirContents(folder, indent + 1, fullPath);
-                            }
+                            Console.WriteLine(file);
                         }
-                        else
+                        foreach (string folder in folders)
                         {
-                            foreach (string file in files)
-                            {
-                                Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
-                            }
-                            foreach (string folder in folders)
-                            {
-                                Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
-                                ListDirContents(folder, indent + 1, fullPath);
-                            }
+                            Console.WriteLine(folder);
+                            ListDirContents(folder, indent + 1, fullPath);
                         }
-
-                    }
-                    catch
-                    {
-                        Console.WriteLine($"Error unable to list: {path}");
-                    }
-                }
-            }
-
-            static void FuncStudentGrading()
-            {
-                string input = modifier;
-                if (modifier == "")
-                {
-                    Console.WriteLine("Student grading");
-                    Console.Write("How many students:");
-
-                    input = Console.ReadLine();
-                }
-
-
-
-
-                int numberOfStudents = 0;
-
-                if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out numberOfStudents))
-                {
-                    if (numberOfStudents >= 0)
-                    {
-                        List<int> grades = new List<int>();
-
-                        while (grades.Count() < numberOfStudents)
-                        {
-                            Console.Write("Enter grade for student #{0}: ", (grades.Count() + 1));
-
-                            input = Console.ReadLine();
-
-                            int grade = 0;
-
-                            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out grade))
-                            {
-                                switch (grade)
-                                {
-                                    case 0:
-                                    case 2:
-                                    case 4:
-                                    case 7:
-                                    case 10:
-                                    case 12:
-                                        grades.Add(grade);
-                                        break;
-                                    default:
-                                        Console.WriteLine("Not a valid grade.");
-                                        break;
-                                }
-                            }
-                        }
-
-                        Console.WriteLine();
-                        Console.WriteLine("Average grade is {0}", (grades.Sum() / ((double)grades.Count())).ToString("0.##"));
                     }
                     else
                     {
-                        Console.WriteLine("Number is less than zero.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Number not recognized.");
-                }
-
-                Console.WriteLine("Done.");
-            }
-
-            static bool IsPrime(int number)
-            {
-                if (number == 1)
-                {
-                    return false;
-                }
-                if (number == 2)
-                {
-                    return true;
-                }
-                int[] primeNumbers = { 3, 5, 7, 11, 13, 17, 19, 23 };
-
-                if (!IsEven(number))
-                {
-                    foreach (int pr in primeNumbers)
-                    {
-                        if (number % pr == 0 && number != pr)
+                        foreach (string file in files)
                         {
-                            return false;
+                            Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
+                        }
+                        foreach (string folder in folders)
+                        {
+                            Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
+                            ListDirContents(folder, indent + 1, fullPath);
                         }
                     }
-                    int maxValue = number / primeNumbers.Last();
-                    for (int i = 23; i < maxValue; i += 2)
-                    {
-                        if (number % i == 0)
-                        {
-                            return false;
-                        }
-                    }
+
                 }
-                else
+                catch
                 {
-                    return false;
+                    Console.WriteLine($"Error unable to list: {path}");
                 }
-                return true;
-
-            }
-
-            static bool IsEven(int number)
-            {
-                return number % 2 == 0;
             }
         }
+
+        static void FuncStudentGrading()
+        {
+            string input = modifier;
+            if (modifier == "")
+            {
+                Console.WriteLine("Student grading");
+                Console.Write("How many students:");
+
+                input = Console.ReadLine();
+            }
+
+
+
+
+            int numberOfStudents = 0;
+
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out numberOfStudents))
+            {
+                if (numberOfStudents >= 0)
+                {
+                    List<int> grades = new List<int>();
+
+                    while (grades.Count() < numberOfStudents)
+                    {
+                        Console.Write("Enter grade for student #{0}: ", (grades.Count() + 1));
+
+                        input = Console.ReadLine();
+
+                        int grade = 0;
+
+                        if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out grade))
+                        {
+                            switch (grade)
+                            {
+                                case 0:
+                                case 2:
+                                case 4:
+                                case 7:
+                                case 10:
+                                case 12:
+                                    grades.Add(grade);
+                                    break;
+                                default:
+                                    Console.WriteLine("Not a valid grade.");
+                                    break;
+                            }
+                        }
+                    }
+
+                    Console.WriteLine();
+                    Console.WriteLine("Average grade is {0}", (grades.Sum() / ((double)grades.Count())).ToString("0.##"));
+                }
+                else
+                {
+                    Console.WriteLine("Number is less than zero.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Number not recognized.");
+            }
+
+            Console.WriteLine("Done.");
+        }
+
+        static bool IsPrime(int number)
+        {
+            if (number == 1)
+            {
+                return false;
+            }
+            if (number == 2)
+            {
+                return true;
+            }
+            int[] primeNumbers = { 3, 5, 7, 11, 13, 17, 19, 23 };
+
+            if (!IsEven(number))
+            {
+                foreach (int pr in primeNumbers)
+                {
+                    if (number % pr == 0 && number != pr)
+                    {
+                        return false;
+                    }
+                }
+                int maxValue = number / primeNumbers.Last();
+                for (int i = 23; i < maxValue; i += 2)
+                {
+                    if (number % i == 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+            return true;
+
+        }
+
+        static bool IsEven(int number)
+        {
+            return number % 2 == 0;
+        }
     }
+}
 
