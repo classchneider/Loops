@@ -192,6 +192,7 @@ namespace Loops
         {
             Console.WriteLine("n factorial");
             Console.Write("Enter any natural non-negative number:");
+            
 
             string input = Console.ReadLine();
 
@@ -199,22 +200,8 @@ namespace Loops
 
             if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
-                ulong num = (ulong)number;
-                if (number >= 0)
-                {
-                    ulong result = 1;
-
-                    for (ulong i = 1; i <= num; i++)
-                    {
-                        result *= i;
-                    }
-
-                    Console.WriteLine("{0} factorial is {1}", number, result);
-                }
-                else
-                {
-                    Console.WriteLine("Number is less than zero.");
-                }
+               Console.WriteLine("{0} factorial is {1}", number, GetFactorial(number));
+               
             }
             else
             {
@@ -223,6 +210,134 @@ namespace Loops
 
             Console.WriteLine("Done.");
         }
+        static string GetFactorial(int number)
+        {
+            
+
+            string result = "";
+            List<string> resultList = new List<string>();
+            resultList.Add("1");
+
+            for(int i = 1; i <= number; i++)
+            {
+      
+                List<string> temp = new List<string>();
+                List<string> multiplied = new List<string>();
+
+                foreach(string s in resultList)
+                {
+                    string mult = MultiplyString(s, i.ToString());
+            
+                    
+                    multiplied.Add(mult);
+                    temp.Add(mult);
+                }
+  
+                bool Stopper = true;
+
+
+                while(Stopper)
+                {
+                    int addToIndex = 0;
+                    Stopper = false;
+                    List<string> tempCopy = new List<string>();
+                    foreach(string s in temp)
+                    {
+                        tempCopy.Add(s);
+                    }
+                    for(int i1 = 0; i1 < tempCopy.Count; i1++)
+                    {
+                        if(tempCopy[i1].Length > 3)
+                        {
+                            Stopper = true;
+                            string[] split = SplitInto3s(tempCopy[i1]);
+                            int startIndex = i1 + addToIndex - (split.Length - 1);
+                            while(startIndex < 0)
+                            {
+                                temp.Insert(0, "");
+                                startIndex++;
+                                addToIndex++;
+                            }
+                            for(int i3 = 0; i3<split.Count(); i3++)
+                            {
+                                int tI = i1+addToIndex-split.Count()+i3+1;
+                                if(i3 == split.Count() - 1)
+                                {
+                                    temp[tI] = split[i3];
+                                }
+                                else
+                                {
+                                    temp[tI] = AddNumberToString(temp[tI], split[i3]);
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+                }
+                resultList = temp;
+            }
+            result = string.Join("", resultList);
+
+            return result;
+        }
+        static string AddNumberToString(string s1, string s2)
+        {
+            try
+            {
+                if(s1 == "")
+                {
+                    s1 = "0";
+                }
+                if(s2 == "")
+                {
+                    s2 = "0";
+                }
+                
+                return (Convert.ToInt32(s1) + Convert.ToInt32(s2)).ToString();
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        static string MultiplyString(string s1, string s2)
+        {
+            try
+            {
+                string s = (Convert.ToInt32(s1) * Convert.ToInt32(s2)).ToString();
+                if(s == "0")
+                {
+                    return "000";
+                }
+                return s;
+            }
+            catch
+            {
+                return "";
+            }
+        }
+        static string[] SplitInto3s(string input)
+        {
+            int arLength = (int)Math.Floor((double)input.Length / 3 - .1);
+            arLength += 1;
+            string[] returnValue = new string[arLength];
+            int lI = returnValue.Length - 1;
+            for(int i = input.Length-1; i >=0; i--)
+            {
+                if(returnValue[lI] == null)
+                {
+                    returnValue[lI] = "";
+                }
+                if(returnValue[lI].Length == 3)
+                {
+                    lI--;
+                }
+                returnValue[lI] = input[i] + returnValue[lI];
+            }
+            return returnValue;
+        }
+        
 
         static void FuncIsPrime()
         {
