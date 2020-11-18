@@ -42,7 +42,9 @@ namespace Loops
                 string cmd = input[0];
                 if (input.Length > 1)
                 {
-                    modifier = input[1];
+                    List<string> mods = input.ToList();
+                    mods.RemoveAt(0);
+                    modifier = string.Join(" ",mods);
                 }
 
                 if (functions.ContainsKey(cmd))
@@ -471,7 +473,8 @@ namespace Loops
 
         static void FuncListFilesInDir()
         {
-            string input = modifier;
+            string input = modifier.Split(' ').First().Trim();
+            string filter = modifier.Replace("full","").Replace(input, "").Trim();
             bool fullPath = false;
             if (modifier == "")
             {
@@ -481,57 +484,117 @@ namespace Loops
 
                 input = Console.ReadLine();
             }
-            string[] inputArray = input.Split(' ');
+            
 
-            if (inputArray.Last().Trim() == "full")
+            if (modifier.Contains("full"))
             {
                 fullPath = true;
-                input = inputArray.First().Trim();
+                
             }
             if (Directory.Exists(input.Trim()))
             {
-                ListDirContents(input.Trim(), 1, fullPath);
+                ListDirContents(input.Trim(), 1, fullPath, filter);
             }
 
             Console.WriteLine();
             Console.WriteLine("Done.");
         }
 
-        static void ListDirContents(string path, int indent, bool fullPath)
+        static void ListDirContents(string path, int indent, bool fullPath, string filter)
         {
             int indentWidth = 2;
+            string[] filters = filter.Trim().Split(' ');
 
             if (Directory.Exists(path))
             {
                 try
                 {
-                    string[] files = Directory.GetFiles(path);
-                    string[] folders = Directory.GetDirectories(path);
-
-                    if (fullPath)
+                    if(filter == "")
                     {
-                        foreach (string file in files)
+                        string[] files = Directory.GetFiles(path);
+                        string[] folders = Directory.GetDirectories(path);
+
+                        if(fullPath)
                         {
-                            Console.WriteLine(file);
+                            foreach(string file in files)
+                            {
+                                Console.WriteLine(file);
+
+                            }
+                            foreach(string folder in folders)
+                            {
+                                Console.WriteLine(folder);
+                                ListDirContents(folder, indent + 1, fullPath, filter);
+                            }
                         }
-                        foreach (string folder in folders)
+                        else
                         {
-                            Console.WriteLine(folder);
-                            ListDirContents(folder, indent + 1, fullPath);
+                            foreach(string file in files)
+                            {
+                                Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
+
+                            }
+                            foreach(string folder in folders)
+                            {
+                                Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
+                                ListDirContents(folder, indent + 1, fullPath, filter);
+                            }
                         }
                     }
                     else
                     {
-                        foreach (string file in files)
+                        foreach(string filter_ in filters)
                         {
-                            Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
-                        }
-                        foreach (string folder in folders)
-                        {
-                            Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
-                            ListDirContents(folder, indent + 1, fullPath);
+                            string[] files = Directory.GetFiles(path);
+                            string[] folders = Directory.GetDirectories(path);
+
+                            if(fullPath)
+                            {
+                                foreach(string file in files)
+                                {
+                                    if(file.Contains(filter_))
+                                    {
+                                        Console.WriteLine(file);   
+                                    }
+
+                                }
+                                foreach(string folder in folders)
+                                {
+                                    if(ContainsFileWithFilter(folder, filter_))
+                                    {
+                                        Console.WriteLine(folder);
+                                    }
+                                    
+
+                                    ListDirContents(folder, indent + 1, fullPath, filter_);
+                                }
+                            }
+                            else
+                            {
+                                foreach(string file in files)
+                                {
+                                    if(filter.Contains(filter_))
+                                    {
+                                        
+                                        Console.WriteLine("".PadLeft(indentWidth * indent) + file.Substring(file.LastIndexOf('\\') + 1));
+                                        
+                                    }
+
+                                }
+                                foreach(string folder in folders)
+                                {
+                                    if(ContainsFileWithFilter(folder, filter_))
+                                    {
+                                        Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
+                                    }
+                                    
+                                    ListDirContents(folder, indent + 1, fullPath, filter_);
+                                }
+                            }
                         }
                     }
+                    
+                    
 
                 }
                 catch
@@ -539,6 +602,28 @@ namespace Loops
                     Console.WriteLine($"Error unable to list: {path}");
                 }
             }
+        }
+        static bool ContainsFileWithFilter(string path, string filter)
+        {
+            if(Directory.Exists(path))
+            {
+                try
+                {
+                    string[] files = Directory.GetFiles(path);
+                    foreach(string file in files)
+                    {
+                        if(file.Contains(filter))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine($"Error unable to list: {path}");
+                }
+            }
+            return false;
         }
 
         static void FuncStudentGrading()
