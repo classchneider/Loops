@@ -50,6 +50,7 @@ namespace Loops
         public static void Start()
         {
             LykkeSpil game = new LykkeSpil();
+            Console.Clear();
 
             if (game.Init())
             {
@@ -66,12 +67,12 @@ namespace Loops
             players = new List<Player>();
             CurrentPlayerIndex = 0;
 
-            Console.WriteLine("Enter at least two players then an empty name to start.");
+            Console.WriteLine("Enter at least two player names, then an empty name to start.");
 
             bool isGettingUsers = true;
             while (isGettingUsers)
             {
-                Console.WriteLine("type 'quit' to exit the program at any time");
+                Console.WriteLine("\nType 'quit' to exit the program at any time");
                 Console.WriteLine("Please enter a name:");
                 string input = Console.ReadLine().Trim();
 
@@ -88,9 +89,10 @@ namespace Loops
                 }
                 else
                 {
-                    if(input == "quit")
+                    if(input.ToLower() == "quit")
                     {
                         Quit();
+                        Console.Clear();
                         return false;
                     }
                     else if (players.Where(p => p.Name == input)?.Count() > 0)
@@ -105,13 +107,13 @@ namespace Loops
             }
 
             // Issue #24: Vælg antal af sider terningen skal have
-            Console.WriteLine("Enter the amount of sides you would like the dice to have");
+            Console.WriteLine("Enter the amount of sides you would like the dice to have:");
             while(true){
             try{
                 Sides=Convert.ToInt32(Console.ReadLine());
                 break;
             }catch{
-                Console.WriteLine("Invailid number! Try again.");
+                Console.WriteLine("Invalid number! Try again.");
             }}
 
             
