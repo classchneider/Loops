@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Loops
@@ -133,10 +134,10 @@ namespace Loops
             CurrentPlayer.StartTurn();
 
             Draw();
-
+            
             while (isRunning)
             {
-                ConsoleKeyInfo input = Console.ReadKey();
+               ConsoleKeyInfo input = Console.ReadKey();
 
                 if (CurrentPlayer.isDone)
                 {
@@ -306,8 +307,14 @@ namespace Loops
                 }
                 else
                 {
-                    Console.WriteLine("{0} turn is over.", Name + (Name.EndsWith("s") ? "'" : "s"));
+                    Console.WriteLine("{0} turn is over.", Name + (Name.EndsWith("s") ? "'" : "'s"));
+                    Thread.Sleep(1500);
+                    while (Console.KeyAvailable)
+                    {
+                        ConsoleKeyInfo flush = Console.ReadKey(true);
+                    }
                     Console.WriteLine("Press any key to continue.");
+
                 }
             }
         }
