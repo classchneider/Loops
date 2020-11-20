@@ -22,7 +22,7 @@ namespace Loops
     {
         public static Dictionary<string, DescAndFunction> functions = new Dictionary<string, DescAndFunction>();
 
-        static bool isRunning = true; // TEST232
+        static bool isRunning = true;
         static string modifier = "";
 
         static void Main(string[] args)
@@ -31,7 +31,7 @@ namespace Loops
 
             ShowFunctions();
 
-            while(isRunning)
+            while (isRunning)
             {
                 modifier = "";
                 Console.WriteLine();
@@ -40,14 +40,14 @@ namespace Loops
 
                 string[] input = Console.ReadLine().Trim().ToLower().Split(' ');
                 string cmd = input[0];
-                if(input.Length > 1)
+                if (input.Length > 1)
                 {
                     List<string> mods = input.ToList();
                     mods.RemoveAt(0);
                     modifier = string.Join(" ", mods);
                 }
 
-                if(functions.ContainsKey(cmd))
+                if (functions.ContainsKey(cmd))
                 {
                     functions[cmd].func.DynamicInvoke();
                 }
@@ -65,7 +65,7 @@ namespace Loops
         static void ShowFunctions()
         {
             Console.WriteLine("Available functions:");
-            foreach(KeyValuePair<string, DescAndFunction> del in functions)
+            foreach (KeyValuePair<string, DescAndFunction> del in functions)
             {
                 Console.WriteLine($"{del.Key} -- {del.Value.desc}");
             }
@@ -97,7 +97,7 @@ namespace Loops
         static void FuncPrintUpTo()
         {
             string input = modifier;
-            if(modifier == "")
+            if (modifier == "")
             {
                 Console.WriteLine("All natural numbers up to n");
                 Console.WriteLine("---");
@@ -112,12 +112,12 @@ namespace Loops
 
             int number = 0;
 
-            if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
-                if(number > 0)
+                if (number > 0)
                 {
                     Console.WriteLine("Printing numbers from 0 to {0}", number);
-                    for(int i = 0; i < number; i++)
+                    for (int i = 0; i < number; i++)
                     {
                         Console.WriteLine((i + 1).ToString());
                     }
@@ -138,7 +138,7 @@ namespace Loops
         static void FuncSumUpTo()
         {
             string input = modifier;
-            if(modifier == "")
+            if (modifier == "")
             {
                 Console.WriteLine("Sum of natural numbers up to n");
                 Console.Write("Enter any natural number above zero:");
@@ -149,12 +149,12 @@ namespace Loops
 
             int number = 0;
 
-            if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
-                if(number > 0)
+                if (number > 0)
                 {
                     int result = 0;
-                    if(IsEven(number))
+                    if (IsEven(number))
                     {
                         result = number * (number / 2) + (number / 2);
                     }
@@ -180,7 +180,7 @@ namespace Loops
         static void FuncFibonacci()
         {
             string input = modifier;
-            if(modifier == "")
+            if (modifier == "")
             {
                 Console.WriteLine("Fibonacci sequence");
                 Console.Write("Enter any natural number above zero:");
@@ -191,13 +191,13 @@ namespace Loops
 
 
 
-            if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out int number))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out int number))
             {
-                if(number > 0)
+                if (number > 0)
                 {
                     int currNumber = 0;
                     int lastNumber = 1;
-                    for(int i = 0; i < number; i++)
+                    for (int i = 0; i < number; i++)
                     {
                         int temp = currNumber;
                         currNumber += lastNumber;
@@ -222,7 +222,7 @@ namespace Loops
         static void FuncFactorial()
         {
             string input = modifier;
-            if(modifier == "")
+            if (modifier == "")
             {
                 Console.WriteLine("n factorial");
                 Console.Write("Enter any natural non-negative number:");
@@ -236,7 +236,7 @@ namespace Loops
 
             int number = 0;
 
-            if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
                 string result = GetFactorial(number);
                 Console.WriteLine("{0} factorial is {1}", number, result);
@@ -257,13 +257,13 @@ namespace Loops
             List<string> resultList = new List<string>();
             resultList.Add("1");
 
-            for(int i = 1; i <= number; i++)
+            for (int i = 1; i <= number; i++)
             {
 
                 List<string> temp = new List<string>();
                 List<string> multiplied = new List<string>();
 
-                foreach(string s in resultList)
+                foreach (string s in resultList)
                 {
                     string mult = MultiplyString(s, i.ToString());
                     multiplied.Add(mult);
@@ -272,32 +272,32 @@ namespace Loops
                 bool Stopper = true;
 
 
-                while(Stopper)
+                while (Stopper)
                 {
                     int addToIndex = 0;
                     Stopper = false;
                     List<string> tempCopy = new List<string>();
-                    foreach(string s in temp)
+                    foreach (string s in temp)
                     {
                         tempCopy.Add(s);
                     }
-                    for(int i1 = 0; i1 < tempCopy.Count; i1++)
+                    for (int i1 = 0; i1 < tempCopy.Count; i1++)
                     {
-                        if(tempCopy[i1].Length > 3)
+                        if (tempCopy[i1].Length > 3)
                         {
                             Stopper = true;
                             string[] split = SplitInto3s(tempCopy[i1]);
                             int startIndex = i1 + addToIndex - (split.Length - 1);
-                            while(startIndex < 0)
+                            while (startIndex < 0)
                             {
                                 temp.Insert(0, "");
                                 startIndex++;
                                 addToIndex++;
                             }
-                            for(int i3 = 0; i3 < split.Count(); i3++)
+                            for (int i3 = 0; i3 < split.Count(); i3++)
                             {
                                 int tI = i1 + addToIndex - split.Count() + i3 + 1;
-                                if(i3 == split.Count() - 1)
+                                if (i3 == split.Count() - 1)
                                 {
                                     temp[tI] = split[i3];
                                 }
@@ -314,7 +314,7 @@ namespace Loops
                 resultList = temp;
             }
             result = string.Join("", resultList);
-            while(result[0] == '0')
+            while (result[0] == '0')
             {
                 result = result.Substring(1);
             }
@@ -325,16 +325,16 @@ namespace Loops
         {
             try
             {
-                if(s1 == "")
+                if (s1 == "")
                 {
                     s1 = "0";
                 }
-                if(s2 == "")
+                if (s2 == "")
                 {
                     s2 = "0";
                 }
                 string returnValue = (Convert.ToInt32(s1) + Convert.ToInt32(s2)).ToString();
-                while(returnValue.Length < 3)
+                while (returnValue.Length < 3)
                 {
                     returnValue = "0" + returnValue;
                 }
@@ -350,7 +350,7 @@ namespace Loops
             try
             {
                 string s = (Convert.ToInt32(s1) * Convert.ToInt32(s2)).ToString();
-                while(s.Length < 3)
+                while (s.Length < 3)
                 {
                     s = "0" + s;
                 }
@@ -367,13 +367,13 @@ namespace Loops
             arLength += 1;
             string[] returnValue = new string[arLength];
             int lI = returnValue.Length - 1;
-            for(int i = input.Length - 1; i >= 0; i--)
+            for (int i = input.Length - 1; i >= 0; i--)
             {
-                if(returnValue[lI] == null)
+                if (returnValue[lI] == null)
                 {
                     returnValue[lI] = "";
                 }
-                if(returnValue[lI].Length == 3)
+                if (returnValue[lI].Length == 3)
                 {
                     lI--;
                 }
@@ -386,7 +386,7 @@ namespace Loops
         static void FuncIsPrime()
         {
             string input = modifier;
-            if(modifier == "")
+            if (modifier == "")
             {
                 Console.WriteLine("Is n prime");
                 Console.Write("Enter any natural number above zero:");
@@ -399,11 +399,11 @@ namespace Loops
 
             int number = 0;
 
-            if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
-                if(number > 0)
+                if (number > 0)
                 {
-                    if(IsPrime(number))
+                    if (IsPrime(number))
                     {
                         Console.WriteLine("{0} is a prime number.", number);
                     }
@@ -428,7 +428,7 @@ namespace Loops
         static void FuncPrimesUpTo()
         {
             string input = modifier;
-            if(modifier == "")
+            if (modifier == "")
             {
                 Console.WriteLine("Primes up to n");
                 Console.Write("Enter any natural number above zero:");
@@ -441,16 +441,16 @@ namespace Loops
 
             int number = 0;
 
-            if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
-                if(number > 0)
+                if (number > 0)
                 {
                     int primesFound = 0;
 
                     int currNum = 1;
-                    while(primesFound < number)
+                    while (primesFound < number)
                     {
-                        if(IsPrime(currNum))
+                        if (IsPrime(currNum))
                         {
                             primesFound++;
                             Console.WriteLine(currNum);
@@ -473,19 +473,11 @@ namespace Loops
 
         static void FuncListFilesInDir()
         {
-            string input = modifier.Split(' ').First().Trim();
+            string input = modifier;
             string filter = "";
-            try
-            {
-                filter = modifier.Replace("full", "").Replace(input, "").Trim();
-            }
-            catch
-            {
-
-            }
-
             bool fullPath = false;
-            if(modifier == "")
+
+            if (input == "")
             {
                 Console.WriteLine("Directory listing");
                 Console.WriteLine("type 'full' at the end of the command to get the full path");
@@ -494,226 +486,114 @@ namespace Loops
                 input = Console.ReadLine();
             }
 
-
-            if(modifier.Contains("full"))
+            string[] inputArr = input.Split(' ');
+            foreach (string word in inputArr)
             {
-                fullPath = true;
-
+                if (inputArr.First() != word)
+                {
+                    if (word == "full")
+                    {
+                        fullPath = true;
+                    }
+                    else if (word.Contains("*"))
+                    {
+                        filter = filter + ' ' + word.Trim();
+                    }
+                }
             }
-            if(Directory.Exists(input.Trim()))
+            if (Directory.Exists(inputArr.First()))
             {
-                ListDirContents(input.Trim(), 1, fullPath, filter);
+                Console.WriteLine();
+                ListDirContents(inputArr.First(), 1, fullPath, filter);
+                Console.WriteLine();
+                Console.WriteLine("Done.");
             }
-
-            Console.WriteLine();
-            Console.WriteLine("Done.");
         }
-
-        static void ListDirContents(string path, int indent, bool fullPath, string filter)
+        static void ListDirContents(string path, int indent, bool fullPath, string inputFilter)
         {
             int indentWidth = 2;
-            string[] filters = filter.Trim().Split(' ');
+            string pad = "".PadLeft(indentWidth * indent);
+            string[] filters = inputFilter.Trim().Split(' ');
 
-            if(Directory.Exists(path))
+            if (Directory.Exists(path))
             {
                 try
                 {
-                    string pad = "".PadLeft(indentWidth * indent);
-                    Console.WriteLine();
-                    
-                    Console.WriteLine(pad + path);
-                    Console.WriteLine();
                     string[] files = Directory.GetFiles(path);
                     string[] folders = Directory.GetDirectories(path);
-                    if(files.Length == 0 && folders.Length == 0)
+
+                    List<string> filteredFiles = new List<string>();
+                    List<string> filteredFolders = new List<string>();
+
+                    if (filters[0] != "")
                     {
-                        
-                        Console.WriteLine(pad +"This folder is empty");
-                        Console.WriteLine();
-                    }
-                    if(filter == "")
-                    {
-
-
-
-
-                        if(fullPath)
+                        foreach (string i in filters)
                         {
-                            foreach(string file in files)
+                            if (i.StartsWith("*"))
                             {
-                                WriteFile(file, fullPath, pad);
+                                string filter = i.Replace("*", "");
+                                foreach (string file in files)
+                                {
+                                    if (file.EndsWith(filter))
+                                    {
+                                        filteredFiles.Add(file);
+                                    }
+                                }
                             }
-                            foreach(string folder in folders)
+                            if (i.EndsWith("*"))
                             {
-                                WriteFile(folder, fullPath, pad, true, folders.ToList().IndexOf(folder));
+                                string filter = i.Replace("*", "");
+                                foreach (string file in files)
+                                {
+                                    string actualFile = file.Substring(file.LastIndexOf("\\") + 1);
+                                    if (actualFile.StartsWith(filter))
+                                    {
+                                        filteredFiles.Add(file);
+                                    }
+                                }
                             }
                         }
-                        else
+                        files = filteredFiles.ToArray();
+                    }
+                    
+                    
+
+
+
+                    if (fullPath)
+                    {
+                        foreach (string file in files)
                         {
-                            foreach(string file in files)
-                            {
-                                WriteFile(file, fullPath, pad);
-                            }
-                            foreach(string folder in folders)
-                            {
-                                WriteFile(folder, fullPath, pad, true, folders.ToList().IndexOf(folder));
-                            }
+                            Console.WriteLine(file);
+                        }
+                        foreach (string folder in folders)
+                        {
+                            ListDirContents(folder, indent + 1, fullPath, inputFilter);
                         }
                     }
                     else
                     {
-                        foreach(string filter_ in filters)
+                        foreach (string file in files)
                         {
-
-                            if(fullPath)
-                            {
-                                foreach(string file in files)
-                                {
-                                    if(file.Contains(filter_))
-                                    {
-                                        WriteFile(file, fullPath, pad);
-                                    }
-
-                                }
-                                foreach(string folder in folders)
-                                {
-                                    WriteFile(folder, fullPath, pad, true, folders.ToList().IndexOf(folder));
-                                }
-                            }
-                            else
-                            {
-                                foreach(string file in files)
-                                {
-                                    if(file.Contains(filter_))
-                                    {
-                                        WriteFile(file, fullPath, pad);
-                                    }
-
-                                }
-                                foreach(string folder in folders)
-                                {
-                                    WriteFile(folder, fullPath, pad, true, folders.ToList().IndexOf(folder));
-                                }
-                            }
+                            Console.WriteLine(pad + file.Substring(file.LastIndexOf('\\') + 1));
                         }
-                    }
-                    Console.WriteLine();
-                    Console.WriteLine("To get the contents of a folder, simply type the index value of the folder");
-
-                    Console.WriteLine("To go up one level, type '..'");
-                    if(fullPath)
-                    {
-                        Console.WriteLine("If you no longer wish to see the full path, type '!full'");
-                    }
-                    else
-                    {
-                        Console.WriteLine("If you want to see the full path, type 'full'");
-                    }
-                    Console.WriteLine("To change your filter, type 'f', followed by the filter");
-
-                    Console.WriteLine("If you wish to quit, type 'Q'");
-
-                    while(true)
-                    {
-                        string inp = Console.ReadLine().Trim().ToLower();
-                        if(inp == "q")
+                        foreach (string folder in folders)
                         {
-                            break;
-                        }
-                        else
-                        {
-                            try
-                            {
-                                string folder = path;
-                                if(inp == "..")
-                                {
-                                    folder = path.Remove(path.LastIndexOf('\\'));
-                                    ListDirContents(folder, indent, fullPath, filter);
-
-                                }
-                                else if(inp.Replace("!", "") == "full")
-                                {
-                                    bool f = true;
-                                    if(inp.Contains('!'))
-                                    {
-                                        f = false;
-                                    }
-                                    ListDirContents(folder, indent, f, filter);
-                                }
-                                else if(inp[0] == 'f')
-                                {
-                                    string filter_ = inp.Replace("f", "");
-                                    ListDirContents(folder, indent, fullPath, filter_);
-                                }
-                                else
-                                {
-                                    folder = folders[Convert.ToInt32(inp)];
-                                    ListDirContents(folder, indent, fullPath, filter);
-                                }
-                                break;
-                            }
-                            catch
-                            {
-                                Console.WriteLine("Invalid input");
-                            }
+                            Console.WriteLine(pad + folder.Substring(folder.LastIndexOf('\\') + 1) + '\\');
+                            ListDirContents(folder, indent + 1, fullPath, inputFilter);
                         }
                     }
                 }
-                catch
+                catch (Exception)
                 {
                     Console.WriteLine($"Error unable to list: {path}");
                 }
             }
         }
-
-        static void WriteFile(string fileName, bool fullpath, string indent, bool folder=false, int folderIndex=0)
-        {
-            string file = fileName;
-            string pad = "".PadRight(7-folderIndex.ToString().Length);
-            if(!fullpath)
-            {
-                file = fileName.Substring(fileName.LastIndexOf('\\') + 1);
-            }
-            if(folder)
-            {
-                pad = ":" + pad;
-                Console.WriteLine(indent + folderIndex + pad + file);
-            }
-            else
-            {
-                pad = "  " + pad;
-                Console.WriteLine(indent + pad + file);
-            }
-            
-        }
-
-        static bool ContainsFileWithFilter(string path, string filter)
-        {
-            if(Directory.Exists(path))
-            {
-                try
-                {
-                    string[] files = Directory.GetFiles(path);
-                    foreach(string file in files)
-                    {
-                        if(file.Contains(filter))
-                        {
-                            return true;
-                        }
-                    }
-                }
-                catch
-                {
-                    Console.WriteLine($"Error unable to list: {path}");
-                }
-            }
-            return false;
-        }
-
         static void FuncStudentGrading()
         {
             string input = modifier;
-            if(modifier == "")
+            if (modifier == "")
             {
                 Console.WriteLine("Student grading");
                 Console.Write("How many students:");
@@ -726,13 +606,13 @@ namespace Loops
 
             int numberOfStudents = 0;
 
-            if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out numberOfStudents))
+            if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out numberOfStudents))
             {
-                if(numberOfStudents >= 0)
+                if (numberOfStudents >= 0)
                 {
                     List<int> grades = new List<int>();
 
-                    while(grades.Count() < numberOfStudents)
+                    while (grades.Count() < numberOfStudents)
                     {
                         Console.Write("Enter grade for student #{0}: ", (grades.Count() + 1));
 
@@ -740,9 +620,9 @@ namespace Loops
 
                         int grade = 0;
 
-                        if(!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out grade))
+                        if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out grade))
                         {
-                            switch(grade)
+                            switch (grade)
                             {
                                 case 0:
                                 case 2:
@@ -777,29 +657,29 @@ namespace Loops
 
         static bool IsPrime(int number)
         {
-            if(number == 1)
+            if (number == 1)
             {
                 return false;
             }
-            if(number == 2)
+            if (number == 2)
             {
                 return true;
             }
             int[] primeNumbers = { 3, 5, 7, 11, 13, 17, 19, 23 };
 
-            if(!IsEven(number))
+            if (!IsEven(number))
             {
-                foreach(int pr in primeNumbers)
+                foreach (int pr in primeNumbers)
                 {
-                    if(number % pr == 0 && number != pr)
+                    if (number % pr == 0 && number != pr)
                     {
                         return false;
                     }
                 }
                 int maxValue = number / primeNumbers.Last();
-                for(int i = 23; i < maxValue; i += 2)
+                for (int i = 23; i < maxValue; i += 2)
                 {
-                    if(number % i == 0)
+                    if (number % i == 0)
                     {
                         return false;
                     }
@@ -819,4 +699,3 @@ namespace Loops
         }
     }
 }
-
