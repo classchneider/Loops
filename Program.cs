@@ -89,9 +89,11 @@ namespace Loops
             functions.Add("isprime", new DescAndFunction { desc = "checks if a given number is a prime number", func = new Action(() => FuncIsPrime()) });
             functions.Add("printprimes", new DescAndFunction { desc = "prints n prime numbers", func = new Action(() => FuncPrimesUpTo()) });
             functions.Add("listdir", new DescAndFunction { desc = "lists directive", func = new Action(() => FuncListFilesInDir()) });
+            functions.Add("explorer", new DescAndFunction { desc = "runs fileexplorer", func = new Action(() => FileExplorer()) });
             functions.Add("lykkespil", new DescAndFunction { desc = "runs lykkespil", func = new Action(() => LykkeSpil.Start()) });
             functions.Add("studentgrading", new DescAndFunction { desc = "grades students", func = new Action(() => FuncStudentGrading()) });
             functions.Add("startreknames", new DescAndFunction { desc = "generate StarTrek names and check if specific names are valid", func = new Action(() => StartTrekProgram.Run()) });
+            
         }
 
         static void FuncPrintUpTo()
@@ -590,6 +592,88 @@ namespace Loops
                 }
             }
         }
+
+        static void FileExplorer(string path = "C:/")
+        {
+            if(Directory.Exists(path))
+            {
+                try
+                {
+                    
+                    string[] files = Directory.GetFiles(path);
+                    string[] folders = Directory.GetDirectories(path);
+                    int padWidth = 7;
+                    string pad = "".PadRight(padWidth);
+                    Console.WriteLine('\n'+pad + path+'\n');
+                    foreach(string file in files)
+                    {
+                        string _file = pad + file.Replace(path, "").Replace("\\","");
+                        
+                        Console.WriteLine(_file);
+                    }
+                    foreach(string folder in folders)
+                    {
+                        string index = $"{folders.ToList().IndexOf(folder)}:";
+                        pad = "".PadRight(padWidth - index.Length);
+                        string _folder = index + pad + folder.Replace(path, "").Replace("\\", "");
+                        Console.WriteLine(_folder);
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("To open a folder, simply type the folders index (the number to the left) \nTo go up a level, type '..'\nIf you wish to quit, type 'q'");
+                    Console.WriteLine();
+                    while(true)
+                    {
+                        string input = Console.ReadLine();
+                        if(input.ToLower() == "q")
+                        {
+                            break;
+                        }
+                        else if(input=="..")
+                        {
+                            string Path = path;
+                            if(Path.Contains('\\'))
+                            {
+                                Path = Path.Remove(Path.LastIndexOf('\\'));
+                            }
+                            else
+                            {
+                                Path = "C:/";
+                            }
+                            FileExplorer(Path);
+                            break;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                int dirIndex = Convert.ToInt32(input);
+                                FileExplorer(folders[dirIndex]);
+                                break;
+                            }
+                            catch
+                            {
+                                Console.WriteLine("Invalid input!");
+                            }
+                        }
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("Error");
+                    Console.WriteLine("Press any key to continue or press escape to quit");
+                    if(Console.ReadKey().Key != ConsoleKey.Escape)
+                    {
+                        FileExplorer();
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Path does not exist");
+                Console.ReadKey();
+            }
+        }
+
         static void FuncStudentGrading()
         {
             string input = modifier;
