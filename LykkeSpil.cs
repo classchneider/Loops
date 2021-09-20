@@ -49,7 +49,7 @@ namespace Loops
         public static void Start()
         {
             LykkeSpil game = new LykkeSpil();
-            
+
             game.Init();
             game.Run();
 
@@ -114,7 +114,7 @@ namespace Loops
             while (isRunning)
             {
                 ConsoleKeyInfo input = Console.ReadKey();
-                
+
                 if (CurrentPlayer.isDone)
                 {
                     if (CurrentPlayer.Score >= winningScore)
@@ -138,30 +138,34 @@ namespace Loops
 
         void Draw()
         {
-            Console.Clear();
-
-            Console.CursorLeft = 0;
-            Console.CursorTop = 0;
-
-            Console.WriteLine("Lykkespil");
-            Console.WriteLine("Players:");
-            
-            List<Player> scoreTable = GetSortedList(players);
-
-            foreach (Player player in scoreTable)
+            while (isRunning)
             {
-                Console.WriteLine("{0}: {1} points", player.Name, player.Score);
-            }
-            Console.WriteLine();
+                Console.Clear();
 
-            if (isRunning)
-            {
-                CurrentPlayer.Draw();
+                Console.CursorLeft = 0;
+                Console.CursorTop = 0;
+
+                Console.WriteLine("Lykkespil");
+                Console.WriteLine("Players:");
+
+                List<Player> scoreTable = GetSortedList(players);
+
+                foreach (Player player in scoreTable)
+                {
+                    Console.WriteLine("{0}: {1} points", player.Name, player.Score);
+                }
+                Console.WriteLine();
+
+                if (isRunning)
+                {
+                    CurrentPlayer.Draw();
+                }
+                else
+                {
+                    Console.WriteLine("{0} has won the game!", scoreTable.First().Name);
+                }
             }
-            else
-            {
-                Console.WriteLine("{0} has won the game!", scoreTable.First().Name);
-            }
+
         }
 
         List<Player> GetSortedList(List<Player> list)
@@ -233,6 +237,7 @@ namespace Loops
                     case ConsoleKey.S:
                         Score += rolls.Sum();
                         isDone = true;
+
                         break;
                     default:
                         break;
@@ -242,7 +247,7 @@ namespace Loops
             public void Draw()
             {
                 Console.WriteLine("{0} turn", Name + (Name.ToLower().EndsWith("s") ? "'" : "'s"));
-                
+
                 string line = "";
 
                 for (int i = 0; i < rolls.Count; i++)
@@ -251,7 +256,7 @@ namespace Loops
                     {
                         line += ",";
                     }
-                    
+
                     line += rolls[i].ToString();
                 }
                 Console.WriteLine("Rolls: {0}", line);

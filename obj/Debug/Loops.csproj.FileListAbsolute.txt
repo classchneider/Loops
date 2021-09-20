@@ -11,3 +11,10 @@ C:\Users\nico858b\Source\Repos\Loops\bin\Debug\Loops.pdb
 C:\Users\nico858b\Source\Repos\Loops\obj\Debug\Loops.csprojAssemblyReference.cache
 C:\Users\nico858b\Source\Repos\Loops\obj\Debug\Loops.exe
 C:\Users\nico858b\Source\Repos\Loops\obj\Debug\Loops.pdb
+C:\Users\magn901m\source\repos\Loops\bin\Debug\Loops.exe.config
+C:\Users\magn901m\source\repos\Loops\bin\Debug\Loops.exe
+C:\Users\magn901m\source\repos\Loops\bin\Debug\Loops.pdb
+C:\Users\magn901m\source\repos\Loops\obj\Debug\Loops.csproj.CoreCompileInputs.cache
+C:\Users\magn901m\source\repos\Loops\obj\Debug\Loops.exe
+C:\Users\magn901m\source\repos\Loops\obj\Debug\Loops.pdb
+C:\Users\magn901m\source\repos\Loops\obj\Debug\Loops.csproj.AssemblyReference.cache
