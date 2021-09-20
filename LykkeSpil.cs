@@ -9,6 +9,7 @@ namespace Loops
     /* Denne klasse implementerer LykkeSpil som er et terningspil */
     class LykkeSpil
     {
+        // Dette er en kommentar
         bool isRunning;
         public static Random rand;
         List<Player> players;
