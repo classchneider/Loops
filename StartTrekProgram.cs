@@ -134,7 +134,7 @@ namespace Loops
             {
                 rand = new Random();
             }
-            else
+            else //hbvfdhfkj
             {
                 rand = new Random(seed.GetHashCode());
             }
