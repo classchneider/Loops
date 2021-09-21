@@ -119,14 +119,7 @@ namespace Loops
                 if (number > 0)
                 {
                     int result = 0;
-                    if (IsEven(number))
-                    {
-                        result = (number)*(number/2);
-                    }
-                    else
-                    {
-                        result = ((number / 2) * number) + number;
-                    }
+                    result = number * (number+1) / 2;
                     Console.WriteLine("Sum of numbers up to {0}: {1}", number, result);
                 }
                 else
@@ -228,7 +221,7 @@ namespace Loops
             {
                 if (number > 0)
                 {
-                    if (IsPrime(number))
+                    if (number == 2 || IsPrime(number))
                     {
                         Console.WriteLine("{0} is a prime number.", number);
                     }
