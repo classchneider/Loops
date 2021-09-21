@@ -75,11 +75,11 @@ namespace Loops
 
         static void FuncPrintUpTo()
         {
-            Console.WriteLine("All natural numbers up to n");
+            Console.WriteLine("All natural numbers up to the number you type in.");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
-
+            // TEST change CLSC
             int number = 0;
 
             if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
@@ -107,7 +107,7 @@ namespace Loops
 
         static void FuncSumUpTo()
         {
-            Console.WriteLine("Sum of natural numbers up to n");
+            Console.WriteLine("Sum of natural numbers up to the number you type in.");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
@@ -174,7 +174,7 @@ namespace Loops
 
         static void FuncFactorial()
         {
-            Console.WriteLine("n factorial");
+            Console.WriteLine("Number factorial");
             Console.Write("Enter any natural non-negative number:");
 
             string input = Console.ReadLine();
@@ -210,7 +210,7 @@ namespace Loops
 
         static void FuncIsPrime()
         {
-            Console.WriteLine("Is n prime");
+            Console.WriteLine("Is given number a prime number");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
@@ -245,7 +245,7 @@ namespace Loops
 
         static void FuncPrimesUpTo()
         {
-            Console.WriteLine("Primes up to n");
+            Console.WriteLine("Primes up to given number.");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
