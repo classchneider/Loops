@@ -219,9 +219,9 @@ namespace Loops
 
             if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
             {
-                if (number > 0)
+                if (number == 2 || number > 0)
                 {
-                    if (number == 2 || IsPrime(number))
+                    if (IsPrime(number))
                     {
                         Console.WriteLine("{0} is a prime number.", number);
                     }
