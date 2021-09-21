@@ -75,7 +75,7 @@ namespace Loops
 
         static void FuncPrintUpTo()
         {
-            Console.WriteLine("All natural numbers up to n");
+            Console.WriteLine("All natural numbers up to the number you type in.");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
@@ -87,7 +87,7 @@ namespace Loops
                 if (number > 0)
                 {
                     Console.WriteLine("Printing numbers from 0 to {0}", number);
-                    for (int i = 1; i < number; i++)
+                    for (int i = 1; i <= number; i++)
                     {
                         Console.WriteLine(i.ToString());
                     }
@@ -107,7 +107,7 @@ namespace Loops
 
         static void FuncSumUpTo()
         {
-            Console.WriteLine("Sum of natural numbers up to n");
+            Console.WriteLine("Sum of natural numbers up to the number you type in.");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
@@ -119,14 +119,7 @@ namespace Loops
                 if (number > 0)
                 {
                     int result = 0;
-                    if (IsEven(number))
-                    {
-                        result = (number)*(number/2);
-                    }
-                    else
-                    {
-                        result = ((number / 2) * number) + number;
-                    }
+                    result = number * (number + 1) / 2;
                     Console.WriteLine("Sum of numbers up to {0}: {1}", number, result);
                 }
                 else
@@ -181,7 +174,7 @@ namespace Loops
 
         static void FuncFactorial()
         {
-            Console.WriteLine("n factorial");
+            Console.WriteLine("Number factorial");
             Console.Write("Enter any natural non-negative number:");
 
             string input = Console.ReadLine();
@@ -217,7 +210,7 @@ namespace Loops
 
         static void FuncIsPrime()
         {
-            Console.WriteLine("Is n prime");
+            Console.WriteLine("Is given number a prime number");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
@@ -252,7 +245,7 @@ namespace Loops
 
         static void FuncPrimesUpTo()
         {
-            Console.WriteLine("Primes up to n");
+            Console.WriteLine("Primes up to given number.");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
@@ -388,19 +381,24 @@ namespace Loops
 
         static bool IsPrime(int number)
         {
-            if (!IsEven(number))
+            if (!IsEven(number) && number != 1)
             {
-                for (int i = 2; i < number; i++)
-                {
-                    for (int u = 2; u < number; u++)
-                    {
+                for (int i = 2; i <= number; i++)
+
+                    for (int u = 2; u <= number; u++)
+
                         if (number == i * u)
                         {
                             return false;
                         }
-                    }
-                }
+
             }
+
+            else if (number == 2)
+            {
+                return true;
+            }
+
             else
             {
                 return false;

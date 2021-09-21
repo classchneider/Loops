@@ -50,7 +50,7 @@ namespace Loops
         public static void Start()
         {
             LykkeSpil game = new LykkeSpil();
-            
+
             game.Init();
             game.Run();
 
@@ -115,7 +115,7 @@ namespace Loops
             while (isRunning)
             {
                 ConsoleKeyInfo input = Console.ReadKey();
-                
+
                 if (CurrentPlayer.isDone)
                 {
                     if (CurrentPlayer.Score >= winningScore)
@@ -130,7 +130,12 @@ namespace Loops
                 }
                 else
                 {
-                    CurrentPlayer.TakeTurn(input);
+                    // Metode til at slutte LykkeSpillet, hvis brugeren trykker Q(ses inde i TakeTurn() metoden)
+                    bool DoContinue = CurrentPlayer.TakeTurn(input);
+                    if (!DoContinue)
+                    {
+                        Quit();
+                    }
                 }
 
                 Draw();
@@ -146,7 +151,7 @@ namespace Loops
 
             Console.WriteLine("Lykkespil");
             Console.WriteLine("Players:");
-            
+
             List<Player> scoreTable = GetSortedList(players);
 
             foreach (Player player in scoreTable)
@@ -163,6 +168,7 @@ namespace Loops
             {
                 Console.WriteLine("{0} has won the game!", scoreTable.First().Name);
             }
+
         }
 
         List<Player> GetSortedList(List<Player> list)
@@ -219,7 +225,7 @@ namespace Loops
                 rolls.Clear();
             }
 
-            public void TakeTurn(ConsoleKeyInfo input)
+            public bool TakeTurn(ConsoleKeyInfo input)
             {
                 switch (input.Key)
                 {
@@ -231,19 +237,22 @@ namespace Loops
                             isDone = true;
                         }
                         break;
-                    case ConsoleKey.S:
+                    case ConsoleKey.E:
                         Score += rolls.Sum();
                         isDone = true;
                         break;
+                    case ConsoleKey.Q:
+                        return false;
                     default:
                         break;
                 }
+                return true;
             }
 
             public void Draw()
             {
                 Console.WriteLine("{0} turn", Name + (Name.ToLower().EndsWith("s") ? "'" : "'s"));
-                
+
                 string line = "";
 
                 for (int i = 0; i < rolls.Count; i++)
@@ -252,7 +261,7 @@ namespace Loops
                     {
                         line += ",";
                     }
-                    
+
                     line += rolls[i].ToString();
                 }
                 Console.WriteLine("Rolls: {0}", line);
@@ -261,8 +270,9 @@ namespace Loops
                 if (!isDone)
                 {
                     Console.WriteLine("Actions");
-                    Console.WriteLine("  'R'oll");
-                    Console.WriteLine("  'S'top");
+                    Console.WriteLine("  'R'oll dice");
+                    Console.WriteLine("  'E'nd turn");
+                    Console.WriteLine("  'Q'uit game");
                 }
                 else
                 {

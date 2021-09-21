@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Loops
 {
     class StartTrekProgram
     {
+        //Arrays
         static string[] vowels = new string[]
             {
                 "a",
@@ -55,9 +57,9 @@ namespace Loops
             Console.WriteLine("Star Trek Names");
 
             Console.WriteLine("Commands:");
-            Console.WriteLine("'gen [number] [seed]' : Generates N number of valid names. Seed is optional. - Example 'gen 5 HelloWorld'");
+            Console.WriteLine("'gen [number] [seed]' : Generates N number of valid names. Limit is 11040. Seed is optional. - Example 'gen 5 HelloWorld'");
             Console.WriteLine("'check [name] [name]' : Checks validity of a name. Can take multiple names.  - Example 'check Spock'");
-
+            Console.WriteLine("'menu' : To get out of this program and back to main menu.  - Example 'menu'");
             Console.Write(">");
 
             string input = Console.ReadLine();
@@ -65,11 +67,17 @@ namespace Loops
 
             if (!string.IsNullOrEmpty(input))
             {
+                //Exits startrekprogram.cs.
+                if (input.StartsWith("menu"))
+                {
+                    Console.Clear();
+                    return;
+                }
                 if (input.StartsWith("gen ") || input.StartsWith("check "))
                 {
                     string[] args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-                    if (args.Length >= 2)
+                    if (args.Length >= 1)
                     {
                         switch (args[0])
                         {
@@ -77,8 +85,9 @@ namespace Loops
                                 int number = 0;
                                 if (int.TryParse(args[1], out number))
                                 {
-                                    if (number > 0)
+                                    if (number > 0 && number <= 11040)
                                     {
+                                        Console.WriteLine("Please wait a moment...");
                                         if (args.Length > 2)
                                         {
                                             GenerateNames(number, args[2]);
@@ -88,9 +97,15 @@ namespace Loops
                                             GenerateNames(number);
                                         }
                                     }
-                                    else
+                                    else if (number == 0)
                                     {
                                         Console.WriteLine("Must generate at least 1 name.");
+
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"{number} is over the limit (11040)");
+                                        Console.WriteLine("To generate names. Please type a number that is less than 11040");
                                     }
                                 }
                                 break;
@@ -125,6 +140,7 @@ namespace Loops
 
             Console.WriteLine();
             Console.WriteLine("Done.");
+            Run();
         }
 
         static void GenerateNames(int count, string seed = "")
@@ -157,13 +173,13 @@ namespace Loops
                     name += consonants[rand.Next(0, consonants.Length)];
                     name += vowels[rand.Next(0, vowels.Length)];
                 }
-                
+
                 name += nameStartAndEnd[gender, 1][rand.Next(0, nameStartAndEnd[gender, 1].Length)];
 
                 if (!names.Contains(name))
                 {
                     names.Add(name);
-                }
+                }             
             }
 
             foreach (string name in names)
