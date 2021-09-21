@@ -63,7 +63,6 @@ namespace Loops
             Console.Write(">");
 
             string input = Console.ReadLine();
-            //Trims and turn uppercase characters to lowercase
             input = input.Trim();
 
             if (!string.IsNullOrEmpty(input))
@@ -134,7 +133,6 @@ namespace Loops
 
             Console.WriteLine();
             Console.WriteLine("Done.");
-            //Rettet af Christian - Nu bliver man ikke smidt ud a programmet.
             Run();
         }
 
