@@ -221,7 +221,7 @@ namespace Loops
             {
                 if (number > 0)
                 {
-                    if (IsPrime(number))
+                    if (number == 2 || IsPrime(number))
                     {
                         Console.WriteLine("{0} is a prime number.", number);
                     }
