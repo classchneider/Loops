@@ -271,7 +271,7 @@ namespace Loops
                 {
                     Console.WriteLine("Actions");
                     Console.WriteLine("  'R'oll dice");
-                    Console.WriteLine("  'E'top turn");
+                    Console.WriteLine("  'E'nd turn");
                     Console.WriteLine("  'Q'uit game");
                 }
                 else
