@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Loops
 {
     class StartTrekProgram
     {
+        //Arrays
         static string[] vowels = new string[]
             {
                 "a",
@@ -57,7 +59,7 @@ namespace Loops
             Console.WriteLine("Commands:");
             Console.WriteLine("'gen [number] [seed]' : Generates N number of valid names. Seed is optional. - Example 'gen 5 HelloWorld'");
             Console.WriteLine("'check [name] [name]' : Checks validity of a name. Can take multiple names.  - Example 'check Spock'");
-
+            Console.WriteLine("'menu' : To get out of this program and back to main menu.  - Example 'menu'");
             Console.Write(">");
 
             string input = Console.ReadLine();
@@ -65,6 +67,12 @@ namespace Loops
 
             if (!string.IsNullOrEmpty(input))
             {
+                //Exits startrekprogram.cs.
+                if (input.StartsWith("menu"))
+                {
+                    Console.Clear();
+                    return;
+                }
                 if (input.StartsWith("gen ") || input.StartsWith("check "))
                 {
                     string[] args = input.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
@@ -125,6 +133,7 @@ namespace Loops
 
             Console.WriteLine();
             Console.WriteLine("Done.");
+            Run();
         }
 
         static void GenerateNames(int count, string seed = "")
