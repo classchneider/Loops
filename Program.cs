@@ -79,7 +79,7 @@ namespace Loops
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
-            // TEST change CLSC
+
             int number = 0;
 
             if (!string.IsNullOrEmpty(input) && int.TryParse(input.Trim(), out number))
