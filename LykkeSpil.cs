@@ -16,6 +16,7 @@ namespace Loops
 
         public const int winningScore = 100;
 
+        private static int DiceSides { get; set; }
         private int _currentPlayerIndex;
         public int CurrentPlayerIndex
         {
@@ -96,6 +97,23 @@ namespace Loops
                     }
                 }
             }
+
+            int diceSidesInput = 0;
+            do
+            {
+                Console.Write("Hvor mange sider skal terningen have?(6-12): ");
+                try
+                {
+                    diceSidesInput = int.Parse(Console.ReadLine());
+                    if (diceSidesInput > 12 || diceSidesInput < 6)
+                        Console.WriteLine("Skriv et tal imellem 6 og 12."); ;
+                }
+                catch
+                {
+                    Console.WriteLine("Der gik noget galt");
+                }
+            } while (diceSidesInput < 6 || diceSidesInput > 12);
+            DiceSides = diceSidesInput;
 
             Console.CursorVisible = false;
         }
@@ -199,7 +217,7 @@ namespace Loops
 
         public static int RollDice()
         {
-            return rand.Next(1, 7);
+            return rand.Next(1, DiceSides+1);
         }
 
         public class Player
