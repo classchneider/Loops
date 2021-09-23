@@ -82,8 +82,8 @@ namespace Loops
                         switch (args[0])
                         {
                             case "gen":
-                                int number = 0;
-                                if (int.TryParse(args[1], out number))
+                                ulong number = 0;
+                                if (ulong.TryParse(args[1], out number))
                                 {
                                     if (number > 0 && number <= 11040)
                                     {
@@ -143,7 +143,7 @@ namespace Loops
             Run();
         }
 
-        static void GenerateNames(int count, string seed = "")
+        static void GenerateNames(ulong count, string seed = "")
         {
             Random rand;
             if (string.IsNullOrEmpty(seed))
@@ -159,7 +159,7 @@ namespace Loops
 
             Console.WriteLine();
 
-            while (names.Count() < count)
+            while (names.Count() < (int)count)
             {
                 string name = "";
 
