@@ -69,6 +69,8 @@ namespace Loops
 
         static void Init()
         {
+            //functions.Add("test", new Action(() => ExitProgram()));
+            //functions.Add("t", new Action(() => ExitProgram()));
             functions.Add("exit", new Action(() => ExitProgram()));
             functions.Add("e", new Action(() => ExitProgram()));
             functions.Add("help", new Action(() => ShowFunctions()));
