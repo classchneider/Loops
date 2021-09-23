@@ -384,14 +384,12 @@ namespace Loops
             if (!IsEven(number) && number != 1)
             {
                 for (int i = 2; i <= number; i++)
-
-                    for (int u = 2; u <= number; u++)
-
-                        if (number == i * u)
-                        {
-                            return false;
-                        }
-
+                {
+                    if (number  % i == 0)
+                    {
+                        return false;
+                    }
+                }
             }
 
             else if (number == 2)
