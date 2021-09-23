@@ -46,10 +46,20 @@ namespace Loops
         static void ShowFunctions()
         {
             Console.WriteLine("Available functions:");
+            bool mustShow = true;
             foreach (KeyValuePair<string, Delegate> del in functions)
             {
-                Console.WriteLine(del.Key);
+                if (mustShow)
+                {
+                    Console.Write(del.Key);
+                }
+                else
+                {
+                    Console.WriteLine($" / {del.Key}");
+                }
+                mustShow = !mustShow;
             }
+
         }
 
         static void ExitProgram()
@@ -60,17 +70,29 @@ namespace Loops
         static void Init()
         {
             functions.Add("exit", new Action(() => ExitProgram()));
+            functions.Add("e", new Action(() => ExitProgram()));
             functions.Add("help", new Action(() => ShowFunctions()));
+            functions.Add("?", new Action(() => ShowFunctions()));
             functions.Add("printnumbers", new Action(() => FuncPrintUpTo()));
+            functions.Add("pn", new Action(() => FuncPrintUpTo()));
             functions.Add("sum", new Action(() => FuncSumUpTo()));
+            functions.Add("s", new Action(() => FuncSumUpTo()));
             functions.Add("fibonacci", new Action(() => FuncFibonacci()));
+            functions.Add("f", new Action(() => FuncFibonacci()));
             functions.Add("factorial", new Action(() => FuncFactorial()));
+            functions.Add("fac", new Action(() => FuncFactorial()));
             functions.Add("isprime", new Action(() => FuncIsPrime()));
+            functions.Add("ip", new Action(() => FuncIsPrime()));
             functions.Add("printprimes", new Action(() => FuncPrimesUpTo()));
+            functions.Add("pp", new Action(() => FuncPrimesUpTo()));
             functions.Add("listdir", new Action(() => FuncListFilesInDir()));
+            functions.Add("ld", new Action(() => FuncListFilesInDir()));
             functions.Add("lykkespil", new Action(() => LykkeSpil.Start()));
+            functions.Add("ls", new Action(() => LykkeSpil.Start()));
             functions.Add("studentgrading", new Action(() => FuncStudentGrading()));
+            functions.Add("sg", new Action(() => FuncStudentGrading()));
             functions.Add("startreknames", new Action(() => StartTrekProgram.Run()));
+            functions.Add("st", new Action(() => StartTrekProgram.Run()));
         }
 
         static void FuncPrintUpTo()
@@ -287,6 +309,8 @@ namespace Loops
         static void FuncListFilesInDir()
         {
             Console.WriteLine("Directory listing");
+            Console.WriteLine("\nTo list files and/or folders, type eg. 'C:\\Users\\[username]\\Downloads'");
+            Console.WriteLine("To list files by extension, type '*.[extension]' one space after given path eg. 'C:\\Users\\[username]\\Downloads *.zip'\n");
             Console.Write("Enter a directory path:");
 
             string input = Console.ReadLine();
@@ -332,7 +356,6 @@ namespace Loops
                 {
                     files = Directory.GetFiles(path,"*"+extension);
                 }
-
                 else
                 {
                     files = Directory.GetFiles(path);
@@ -415,14 +438,12 @@ namespace Loops
             if (!IsEven(number) && number != 1)
             {
                 for (int i = 2; i <= number; i++)
-
-                    for (int u = 2; u <= number; u++)
-
-                        if (number == i * u)
-                        {
-                            return false;
-                        }
-
+                {
+                    if (number  % i == 0)
+                    {
+                        return false;
+                    }
+                }
             }
 
             else if (number == 2)
