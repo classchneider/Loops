@@ -82,8 +82,8 @@ namespace Loops
                         switch (args[0])
                         {
                             case "gen":
-                                ulong number = 0;
-                                if (ulong.TryParse(args[1], out number))
+                                int number = 0;
+                                if (int.TryParse(args[1], out number))
                                 {
                                     if (number > 0 && number <= 11040)
                                     {
@@ -105,8 +105,17 @@ namespace Loops
                                     else
                                     {
                                         Console.WriteLine($"{number} is over the limit (11040)");
-                                        Console.WriteLine("To generate names. Please type a number that is less than 11040");
+                                        Console.WriteLine("To generate names. Please type a number that less than 11040");
                                     }
+                                }
+                                else if (args[1].All(char.IsDigit))
+                                {
+                                    Console.WriteLine($"{args[1]} is over the limit (11040)");
+                                    Console.WriteLine("To generate names. Please type a number that less than 11040");
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"'{args[1]}' is not a number");
                                 }
                                 break;
                             case "check":
@@ -143,7 +152,7 @@ namespace Loops
             Run();
         }
 
-        static void GenerateNames(ulong count, string seed = "")
+        static void GenerateNames(int count, string seed = "")
         {
             Random rand;
             if (string.IsNullOrEmpty(seed))
@@ -159,7 +168,7 @@ namespace Loops
 
             Console.WriteLine();
 
-            while (names.Count() < (int)count)
+            while (names.Count() < count)
             {
                 string name = "";
 
