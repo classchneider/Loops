@@ -168,13 +168,16 @@ namespace Loops
             Console.CursorTop = 0;
 
             Console.WriteLine("Lykkespil");
+            Console.WriteLine("");
             Console.WriteLine("Players:");
 
             List<Player> scoreTable = GetSortedList(players);
 
             foreach (Player player in scoreTable)
             {
-                Console.WriteLine("{0}: {1} points", player.Name, player.Score);
+                Console.WriteLine("{0}:", player.Name);
+                Console.WriteLine("{0} Points", player.Score);
+                Console.WriteLine("");
             }
             Console.WriteLine();
 

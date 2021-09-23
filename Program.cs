@@ -137,7 +137,9 @@ namespace Loops
 
         static void FuncFibonacci()
         {
-            Console.WriteLine("Fibonacci sequence");
+            Console.WriteLine("Fibonacci Sequence");
+            Console.WriteLine("Each number in the sequence is the sum of the two numbers that precede it. 1,1,2,3,5...");
+            Console.WriteLine("Shows number of steps of the sequence");
             Console.Write("Enter any natural number above zero:");
 
             string input = Console.ReadLine();
