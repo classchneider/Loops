@@ -288,24 +288,53 @@ namespace Loops
             Console.Write("Enter a directory path:");
 
             string input = Console.ReadLine();
+            var args = input.Split('*');
 
-            if (Directory.Exists(input.Trim()))
+            //Checks if directory exists AND args contain index 1 
+            if (Directory.Exists(args[0].Trim()) && args.ElementAtOrDefault(1) != null)
             {
-                ListDirContents(input.Trim(), 1);
-            }
+                //Checks if extension doesn't exist in given directory
+                if (Directory.GetFiles(args[0], "*" + args[1]).Length == 0)
+                {
+                    Console.WriteLine("Invalid file extension.");
+                }
+                else
+                {
+                    ListDirContents(args[0].Trim(), args[1].Trim(), 1);
 
+                }
+            }
+            //Checks if directory exists
+            else if (Directory.Exists(args[0].Trim()))
+            {
+                ListDirContents(args[0].Trim(),"",1);
+            }
+            else
+            {
+                Console.WriteLine("Invalid path");
+            }
             Console.WriteLine();
             Console.WriteLine("Done.");
         }
 
-        static void ListDirContents(string path, int indent)
+        static void ListDirContents(string path,string extension, int indent)
         {
             int indentWidth = 2;
 
             if (Directory.Exists(path))
             {
-                string[] files = Directory.GetFiles(path);
+                string[] files;
+     
+                //Checks if extension present
+                if (!String.IsNullOrEmpty(extension))
+                {
+                    files = Directory.GetFiles(path,"*"+extension);
+                }
 
+                else
+                {
+                    files = Directory.GetFiles(path);
+                }
                 string[] folders = Directory.GetDirectories(path);
 
                 foreach (string file in files)
@@ -316,7 +345,7 @@ namespace Loops
                 foreach (string folder in folders)
                 {
                     Console.WriteLine("".PadLeft(indentWidth * indent) + folder.Substring(folder.LastIndexOf('\\') + 1));
-                    ListDirContents(folder, indent + 1);
+                    ListDirContents(folder, extension, indent + 1);
                 }
             }
         }
