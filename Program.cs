@@ -285,6 +285,8 @@ namespace Loops
         static void FuncListFilesInDir()
         {
             Console.WriteLine("Directory listing");
+            Console.WriteLine("\nTo list files and/or folders, type eg. 'C:\\Users\\[username]\\Downloads'");
+            Console.WriteLine("To list files by extension, type '*.[extension]' one space after given path eg. 'C:\\Users\\[username]\\Downloads *.zip'\n");
             Console.Write("Enter a directory path:");
 
             string input = Console.ReadLine();
@@ -330,7 +332,6 @@ namespace Loops
                 {
                     files = Directory.GetFiles(path,"*"+extension);
                 }
-
                 else
                 {
                     files = Directory.GetFiles(path);
